@@ -1,0 +1,7 @@
+{
+  "name": "LabLingua Pro",
+  "description": "A comprehensive Business English trainer tailored for Laboratory Professionals, featuring AI-powered email drafting, vocabulary building, and real-time voice roleplay scenarios.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
