@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconUser, IconCheck, IconMail, IconSend } from './Icons';
+import { IconCheck, IconSend } from './Icons';
 
 const UserProfile: React.FC = () => {
   const [questionText, setQuestionText] = useState('');

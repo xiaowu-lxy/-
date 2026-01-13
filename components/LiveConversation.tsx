@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { IconMic, IconStop } from './Icons';
 
-// Audio Utility Functions
-function createBlob(data: Float32Array): Blob {
-  const l = data.length;
-  const int16 = new Int16Array(l);
-  for (let i = 0; i < l; i++) {
-    int16[i] = data[i] * 32768;
+// Declare process to avoid TS errors
+declare const process: {
+  env: {
+    API_KEY?: string;
   }
-  return new Blob([new Uint8Array(int16.buffer)], { type: 'audio/pcm' });
-}
+};
 
+// Audio Utility Functions
 function decode(base64: string) {
   const binaryString = atob(base64);
   const len = binaryString.length;

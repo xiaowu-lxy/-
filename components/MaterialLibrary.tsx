@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Material, MaterialCategory } from '../types';
+import { Material } from '../types';
 import { IconFolder, IconChevronRight } from './Icons';
 import EmailAssistant from './EmailAssistant'; // Reuse the AI tool inside the library
 

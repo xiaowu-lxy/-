@@ -1,6 +1,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { VocabCard } from "../types";
 
+// Declare process to avoid TypeScript errors in browser context
+declare const process: {
+  env: {
+    API_KEY?: string;
+  }
+};
+
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
 

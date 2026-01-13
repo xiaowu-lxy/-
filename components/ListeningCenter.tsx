@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ListeningLesson } from '../types';
-import { IconPlay, IconCheck, IconChevronRight } from './Icons';
+import { IconPlay, IconChevronRight } from './Icons';
 
 // 这个 BVID 是用户提供的视频: BV1w7411g7jn
 const BVID = 'BV1w7411g7jn';

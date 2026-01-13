@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Question } from '../types';
-import { IconCheck, IconPlay, IconMic } from './Icons';
+import { IconCheck, IconPlay } from './Icons';
 
 // 模拟今日的题目数据 (Realistic Lab Scenario Data)
 const TODAY_QUESTIONS: Question[] = [
