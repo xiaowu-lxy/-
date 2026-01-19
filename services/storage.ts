@@ -3,7 +3,8 @@ import { Question, UserStats } from '../types';
 const KEYS = {
   MISTAKES: 'lab_lingua_mistakes',
   STATS: 'lab_lingua_stats',
-  PROGRESS: 'lab_lingua_progress', // New key for progress
+  PROGRESS_MAP: 'lab_lingua_progress_map', // Changed: store a map of day -> index
+  LAST_DAY: 'lab_lingua_last_day' // Changed: store the last visited day
 };
 
 export interface MistakeRecord {
@@ -13,11 +14,6 @@ export interface MistakeRecord {
   correctAnswer: string;
   date: string;
   title: string;
-}
-
-export interface PracticeProgress {
-  day: number;
-  index: number;
 }
 
 export const getMistakes = (): MistakeRecord[] => {
@@ -69,7 +65,6 @@ export const updateUserStats = (questionsCount: number) => {
     const stats = getUserStats();
     
     // Simple streak logic (check if last update was yesterday)
-    // For demo simplicity, we just increment if it's a new session
     const lastLogin = localStorage.getItem('last_login_date');
     const today = new Date().toDateString();
     
@@ -89,24 +84,36 @@ export const updateUserStats = (questionsCount: number) => {
   }
 };
 
-// --- New Progress Functions ---
+// --- Updated Progress Functions (Per Day) ---
 
-export const savePracticeProgress = (day: number, index: number) => {
+export const getDayProgress = (day: number): number => {
   try {
-    const progress: PracticeProgress = { day, index };
-    localStorage.setItem(KEYS.PROGRESS, JSON.stringify(progress));
+    const map = JSON.parse(localStorage.getItem(KEYS.PROGRESS_MAP) || '{}');
+    return typeof map[day] === 'number' ? map[day] : 0;
+  } catch {
+    return 0;
+  }
+};
+
+export const saveDayProgress = (day: number, index: number) => {
+  try {
+    const map = JSON.parse(localStorage.getItem(KEYS.PROGRESS_MAP) || '{}');
+    map[day] = index;
+    localStorage.setItem(KEYS.PROGRESS_MAP, JSON.stringify(map));
   } catch (e) {
     console.error("Failed to save progress", e);
   }
 };
 
-export const getPracticeProgress = (): PracticeProgress => {
+export const getLastActiveDay = (): number => {
   try {
-    const data = localStorage.getItem(KEYS.PROGRESS);
-    if (data) {
-      return JSON.parse(data);
-    }
-  } catch {}
-  // Default to Day 1, Index 0 if no save found
-  return { day: 1, index: 0 };
+    const day = localStorage.getItem(KEYS.LAST_DAY);
+    return day ? parseInt(day) : 1;
+  } catch {
+    return 1;
+  }
+};
+
+export const saveLastActiveDay = (day: number) => {
+  localStorage.setItem(KEYS.LAST_DAY, day.toString());
 };

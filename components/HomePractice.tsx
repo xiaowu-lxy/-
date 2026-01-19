@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Question } from '../types';
-import { IconCheck, IconPlay } from './Icons';
-import { saveMistake, updateUserStats, getPracticeProgress, savePracticeProgress } from '../services/storage';
+import { IconCheck, IconPlay, IconRefresh } from './Icons';
+import { saveMistake, updateUserStats, getDayProgress, saveDayProgress, getLastActiveDay, saveLastActiveDay } from '../services/storage';
 
 // ==========================================
 // 核心语料库 (DATA BANKS - Expanded with Notes)
@@ -279,16 +279,11 @@ const generateDailyQuestions = (day: number): Question[] => {
 // ==========================================
 
 const HomePractice: React.FC = () => {
-  // Initialize state from local storage progress if available
-  const [currentDay, setCurrentDay] = useState(() => {
-    const saved = getPracticeProgress();
-    return saved.day || 1;
-  });
+  // 1. Restore last active day on load
+  const [currentDay, setCurrentDay] = useState(() => getLastActiveDay());
   
-  const [currentIndex, setCurrentIndex] = useState(() => {
-    const saved = getPracticeProgress();
-    return saved.index || 0;
-  });
+  // 2. Restore progress SPECIFIC to that day
+  const [currentIndex, setCurrentIndex] = useState(() => getDayProgress(getLastActiveDay()));
 
   const [completed, setCompleted] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -309,20 +304,42 @@ const HomePractice: React.FC = () => {
 
   // Auto-save progress whenever day or index changes
   useEffect(() => {
-    savePracticeProgress(currentDay, currentIndex);
+    saveDayProgress(currentDay, currentIndex);
+    saveLastActiveDay(currentDay);
   }, [currentDay, currentIndex]);
 
   const progress = Math.min(((currentIndex) / currentQuestions.length) * 100, 100);
-  
-  // Get Topic Name
   const dailyTopic = TOPIC_SCHEDULE[(currentDay - 1) % TOPIC_SCHEDULE.length];
 
+  // --- FIX: Handle Day Change Logic ---
   const handleDayChange = (day: number) => {
     if (day < 1 || day > 100) return;
+    
+    // 1. Save current day state before leaving (redundant due to useEffect, but safe)
+    saveLastActiveDay(day);
+
+    // 2. Retrieve progress for the NEW day
+    const savedIndexForNewDay = getDayProgress(day);
+
+    // 3. Update State
     setCurrentDay(day);
-    setCurrentIndex(0); // Reset index when manually changing days
+    setCurrentIndex(savedIndexForNewDay);
+    
+    // 4. Reset UI state
     setCompleted(false);
     resetQuestionState();
+  };
+
+  const handleRestartDay = () => {
+    setCurrentIndex(0);
+    setCompleted(false);
+    resetQuestionState();
+    saveDayProgress(currentDay, 0); // Force save reset
+  };
+
+  // Direct reset, no confirmation dialog to prevent issues
+  const confirmRestart = () => {
+    handleRestartDay();
   };
 
   const resetQuestionState = () => {
@@ -332,9 +349,6 @@ const HomePractice: React.FC = () => {
     setTranslateInput('');
   };
 
-  // ----------------------------------------------------------------
-  // LOGIC UPDATED TO SAVE MISTAKES
-  // ----------------------------------------------------------------
   const handleChoiceSubmit = (option: string) => {
     if (feedback) return;
     setSelectedOption(option);
@@ -408,7 +422,7 @@ const HomePractice: React.FC = () => {
         <h2 className="text-2xl font-bold text-slate-800 mb-2">Day {currentDay} 完成！</h2>
         <p className="text-slate-500 mb-8">今日打卡成功！结果已自动保存。</p>
         <button 
-          onClick={() => handleDayChange(currentDay)}
+          onClick={handleRestartDay}
           className="w-full bg-slate-100 text-slate-700 py-3 rounded-lg font-bold shadow-sm mb-3"
         >
           再练一次
@@ -467,13 +481,22 @@ const HomePractice: React.FC = () => {
       <div className="p-4">
         <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 min-h-[400px] flex flex-col">
           
-          <div className="mb-6">
-            <span className="inline-block px-2 py-1 bg-slate-100 text-slate-500 text-[10px] rounded font-bold uppercase tracking-wide mb-2">
-              {currentQ.category} • {currentQ.type.toUpperCase()}
-            </span>
-            <h3 className="text-lg font-bold text-slate-800 leading-snug">
-              {currentQ.prompt}
-            </h3>
+          <div className="mb-6 flex justify-between items-start">
+            <div>
+                <span className="inline-block px-2 py-1 bg-slate-100 text-slate-500 text-[10px] rounded font-bold uppercase tracking-wide mb-2">
+                {currentQ.category} • {currentQ.type.toUpperCase()}
+                </span>
+                <h3 className="text-lg font-bold text-slate-800 leading-snug">
+                {currentQ.prompt}
+                </h3>
+            </div>
+            <button 
+                onClick={confirmRestart}
+                className="p-2 text-slate-300 hover:text-wechat transition-colors"
+                title="重新开始"
+            >
+                <IconRefresh className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Render Question Types */}
