@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconCheck, IconSend } from './Icons';
+import { getUserStats } from '../services/storage';
+import { UserStats } from '../types';
 
 const UserProfile: React.FC = () => {
   const [questionText, setQuestionText] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [stats, setStats] = useState<UserStats>({ streakDays: 1, totalPracticed: 0, mistakesCount: 0 });
+
+  useEffect(() => {
+    setStats(getUserStats());
+  }, []);
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -29,22 +36,22 @@ const UserProfile: React.FC = () => {
              </div>
              <div>
                 <h2 className="text-xl font-bold text-slate-800">Penny</h2>
-                <p className="text-xs text-slate-500">实验室技术员 • Lv.3</p>
+                <p className="text-xs text-slate-500">实验室技术员 • Lv.{Math.floor(stats.totalPracticed / 50) + 1}</p>
              </div>
           </div>
           
           <div className="flex justify-around">
              <div className="text-center">
-                <p className="text-2xl font-bold text-slate-800">15</p>
+                <p className="text-2xl font-bold text-slate-800">{stats.streakDays}</p>
                 <p className="text-[10px] text-slate-400 uppercase tracking-wider">连续打卡 (天)</p>
              </div>
              <div className="text-center">
-                <p className="text-2xl font-bold text-slate-800">42</p>
-                <p className="text-[10px] text-slate-400 uppercase tracking-wider">掌握单词</p>
+                <p className="text-2xl font-bold text-slate-800">{stats.totalPracticed}</p>
+                <p className="text-[10px] text-slate-400 uppercase tracking-wider">练习题数</p>
              </div>
              <div className="text-center">
-                <p className="text-2xl font-bold text-slate-800">8</p>
-                <p className="text-[10px] text-slate-400 uppercase tracking-wider">完成作业</p>
+                <p className="text-2xl font-bold text-slate-800">{stats.mistakesCount}</p>
+                <p className="text-[10px] text-slate-400 uppercase tracking-wider">待攻克错题</p>
              </div>
           </div>
        </div>

@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconList, IconRefresh, IconSend } from './Icons';
+import { getMistakes, MistakeRecord } from '../services/storage';
 
 const ReviewBank: React.FC = () => {
   const [tab, setTab] = useState<'history' | 'mistakes'>('mistakes');
+  const [mistakes, setMistakes] = useState<MistakeRecord[]>([]);
 
-  const MOCK_MISTAKES = [
-    { id: 1, title: 'Email Opening', date: 'Yesterday', q: '...ask for a status update...', userAns: 'I want results now.', correct: 'Could you please provide an update...' },
-    { id: 2, title: 'Equipment Vocab', date: '3 days ago', q: 'Translate: 离心机', userAns: 'Spinner', correct: 'Centrifuge' },
-    { id: 3, title: 'Phrase Usage', date: '4 days ago', q: 'We are ______ ethanol.', userAns: 'running into', correct: 'running out of' },
-  ];
+  useEffect(() => {
+    setMistakes(getMistakes());
+  }, []);
 
   const handleShareReport = () => {
-    // Generate a text report
-    const header = `【Penny的学习周报】\n📅 日期: ${new Date().toLocaleDateString()}\n❌ 本周错题: ${MOCK_MISTAKES.length}个\n------------------\n`;
-    const body = MOCK_MISTAKES.map((m, i) => {
-        return `${i+1}. [${m.title}]\n❓ ${m.q}\n❎ 误: ${m.userAns}\n✅ 正: ${m.correct}`;
+    const header = `【Penny的学习周报】\n📅 日期: ${new Date().toLocaleDateString()}\n❌ 待攻克错题: ${mistakes.length}个\n------------------\n`;
+    const body = mistakes.map((m, i) => {
+        return `${i+1}. [${m.title}]\n❓ ${m.question}\n❎ 误: ${m.userAnswer}\n✅ 正: ${m.correctAnswer}`;
     }).join('\n\n');
     const footer = `\n------------------\n请老师指点！💪`;
 
     const fullReport = header + body + footer;
 
-    // Copy to clipboard
     navigator.clipboard.writeText(fullReport).then(() => {
         alert('学习报告已复制！\n请直接在微信粘贴发送给老师。');
     }).catch(err => {
@@ -58,7 +56,7 @@ const ReviewBank: React.FC = () => {
                   <div className="flex justify-between items-start mb-4">
                       <div>
                           <h2 className="font-bold text-lg">本周待攻克</h2>
-                          <p className="text-slate-400 text-xs">累积错题 {MOCK_MISTAKES.length} 道</p>
+                          <p className="text-slate-400 text-xs">累积错题 {mistakes.length} 道</p>
                       </div>
                       <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
                           <span className="text-xl">📉</span>
@@ -66,37 +64,35 @@ const ReviewBank: React.FC = () => {
                   </div>
                   <button 
                     onClick={handleShareReport}
-                    className="w-full bg-wechat hover:bg-wechat-dark text-white py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-colors"
+                    disabled={mistakes.length === 0}
+                    className="w-full bg-wechat hover:bg-wechat-dark text-white py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
                   >
                     <IconSend className="w-4 h-4" />
-                    一键发送报告给老师
+                    {mistakes.length > 0 ? '一键发送报告给老师' : '暂无错题，继续保持'}
                   </button>
                </div>
 
-               <div className="bg-orange-50 p-3 rounded-lg flex items-center gap-3 mb-2">
-                  <div className="bg-orange-100 p-2 rounded-full text-orange-600">
-                    <IconRefresh className="w-4 h-4" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-xs font-bold text-orange-800">AI 复习建议</h4>
-                    <p className="text-[10px] text-orange-600">你最近在“词组搭配”方面错误率较高。</p>
-                  </div>
-               </div>
+               {mistakes.length === 0 && (
+                   <div className="text-center py-8 text-slate-400 text-sm">
+                       <span className="text-2xl block mb-2">🎉</span>
+                       太棒了！目前没有错题记录。
+                   </div>
+               )}
 
-               {MOCK_MISTAKES.map(item => (
+               {mistakes.map(item => (
                  <div key={item.id} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
                     <div className="flex justify-between items-center mb-2">
                        <span className="text-[10px] font-bold bg-red-50 text-red-600 px-1.5 py-0.5 rounded">WRONG</span>
                        <span className="text-[10px] text-slate-400">{item.date}</span>
                     </div>
                     <h4 className="font-medium text-slate-800 text-sm mb-1">{item.title}</h4>
-                    <p className="text-xs text-slate-500 mb-2 truncate">{item.q}</p>
+                    <p className="text-xs text-slate-500 mb-2 truncate">{item.question}</p>
                     <div className="space-y-1">
                         <div className="bg-red-50 p-2 rounded text-xs text-red-800 font-mono flex gap-2">
-                           <span className="opacity-50 select-none">YOU:</span> {item.userAns}
+                           <span className="opacity-50 select-none">YOU:</span> {item.userAnswer}
                         </div>
                         <div className="bg-green-50 p-2 rounded text-xs text-green-800 font-mono flex gap-2">
-                           <span className="opacity-50 select-none">ANS:</span> {item.correct}
+                           <span className="opacity-50 select-none">ANS:</span> {item.correctAnswer}
                         </div>
                     </div>
                  </div>
@@ -107,7 +103,7 @@ const ReviewBank: React.FC = () => {
           {tab === 'history' && (
              <div className="text-center py-10 text-slate-400 text-sm">
                 <IconList className="w-8 h-8 mx-auto mb-2 opacity-20" />
-                <p>暂无更多历史记录</p>
+                <p>历史练习记录将在此显示</p>
              </div>
           )}
        </div>
