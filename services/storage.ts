@@ -3,6 +3,7 @@ import { Question, UserStats } from '../types';
 const KEYS = {
   MISTAKES: 'lab_lingua_mistakes',
   STATS: 'lab_lingua_stats',
+  PROGRESS: 'lab_lingua_progress', // New key for progress
 };
 
 export interface MistakeRecord {
@@ -12,6 +13,11 @@ export interface MistakeRecord {
   correctAnswer: string;
   date: string;
   title: string;
+}
+
+export interface PracticeProgress {
+  day: number;
+  index: number;
 }
 
 export const getMistakes = (): MistakeRecord[] => {
@@ -81,4 +87,26 @@ export const updateUserStats = (questionsCount: number) => {
     console.error("Failed to update stats", e);
     return getUserStats();
   }
+};
+
+// --- New Progress Functions ---
+
+export const savePracticeProgress = (day: number, index: number) => {
+  try {
+    const progress: PracticeProgress = { day, index };
+    localStorage.setItem(KEYS.PROGRESS, JSON.stringify(progress));
+  } catch (e) {
+    console.error("Failed to save progress", e);
+  }
+};
+
+export const getPracticeProgress = (): PracticeProgress => {
+  try {
+    const data = localStorage.getItem(KEYS.PROGRESS);
+    if (data) {
+      return JSON.parse(data);
+    }
+  } catch {}
+  // Default to Day 1, Index 0 if no save found
+  return { day: 1, index: 0 };
 };

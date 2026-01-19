@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Question } from '../types';
 import { IconCheck, IconPlay } from './Icons';
-import { saveMistake, updateUserStats } from '../services/storage';
+import { saveMistake, updateUserStats, getPracticeProgress, savePracticeProgress } from '../services/storage';
 
 // ==========================================
 // 核心语料库 (DATA BANKS - Expanded with Notes)
@@ -279,8 +279,17 @@ const generateDailyQuestions = (day: number): Question[] => {
 // ==========================================
 
 const HomePractice: React.FC = () => {
-  const [currentDay, setCurrentDay] = useState(1);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Initialize state from local storage progress if available
+  const [currentDay, setCurrentDay] = useState(() => {
+    const saved = getPracticeProgress();
+    return saved.day || 1;
+  });
+  
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    const saved = getPracticeProgress();
+    return saved.index || 0;
+  });
+
   const [completed, setCompleted] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
@@ -290,7 +299,20 @@ const HomePractice: React.FC = () => {
   // Generate questions for the current day
   const currentQuestions = useMemo(() => generateDailyQuestions(currentDay), [currentDay]);
   const currentQ = currentQuestions[currentIndex];
-  const progress = ((currentIndex) / currentQuestions.length) * 100;
+  
+  // Check if we restored a completed state
+  useEffect(() => {
+    if (currentIndex >= currentQuestions.length && !completed) {
+      setCompleted(true);
+    }
+  }, [currentIndex, currentQuestions.length, completed]);
+
+  // Auto-save progress whenever day or index changes
+  useEffect(() => {
+    savePracticeProgress(currentDay, currentIndex);
+  }, [currentDay, currentIndex]);
+
+  const progress = Math.min(((currentIndex) / currentQuestions.length) * 100, 100);
   
   // Get Topic Name
   const dailyTopic = TOPIC_SCHEDULE[(currentDay - 1) % TOPIC_SCHEDULE.length];
@@ -298,7 +320,7 @@ const HomePractice: React.FC = () => {
   const handleDayChange = (day: number) => {
     if (day < 1 || day > 100) return;
     setCurrentDay(day);
-    setCurrentIndex(0);
+    setCurrentIndex(0); // Reset index when manually changing days
     setCompleted(false);
     resetQuestionState();
   };
@@ -372,10 +394,12 @@ const HomePractice: React.FC = () => {
       setCompleted(true);
       // Update stats on completion
       updateUserStats(currentQuestions.length);
+      // We also update index to length so it persists as "done"
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
-  if (completed) {
+  if (completed || currentIndex >= currentQuestions.length) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-center p-6 animate-fade-in">
         <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
@@ -398,6 +422,9 @@ const HomePractice: React.FC = () => {
       </div>
     );
   }
+
+  // Guard against invalid index (e.g. if questions array shrank for some reason)
+  if (!currentQ) return null;
 
   return (
     <div className="pb-24">
