@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IconList, IconRefresh, IconSend } from './Icons';
+import { IconList, IconSend } from './Icons';
 import { getMistakes, MistakeRecord } from '../services/storage';
 
 const ReviewBank: React.FC = () => {

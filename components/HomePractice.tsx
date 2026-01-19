@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Question, QuestionType } from '../types';
-import { IconCheck, IconPlay, IconChevronRight } from './Icons';
+import React, { useState, useMemo } from 'react';
+import { Question } from '../types';
+import { IconCheck, IconPlay } from './Icons';
 import { saveMistake, updateUserStats } from '../services/storage';
 
 // ==========================================
@@ -155,7 +155,6 @@ const generateDailyQuestions = (day: number): Question[] => {
 
   // 2. 如果没有固定题库，则使用算法生成
   const questions: Question[] = [];
-  const topicIndex = (day - 1) % 5;
   const baseSeed = day * 1000;
 
   // --- Part 1: Vocabulary (5 Questions) ---
