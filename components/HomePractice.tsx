@@ -130,6 +130,23 @@ const DAY_4_FIXED: Question[] = [
   { id: 'd4_15', type: 'translate', category: 'Vocab', prompt: 'Translate: "不幸的是" (beginning with U)', correctAnswer: 'Unfortunately', explanation: 'Unfortunately (不幸的是/遗憾的是)。' }
 ];
 
+const DAY_5_FIXED: Question[] = [
+  { id: 'd5_1', type: 'choice', category: 'Phrase', prompt: 'Could you come and ______ the project?', options: ['take a look at', 'watch at', 'see at', 'look'], correctAnswer: 'take a look at', explanation: 'Take a look at (看一看/检查)。' },
+  { id: 'd5_2', type: 'ordering', category: 'Grammar', prompt: '连词成句：我会给我朋友雇一个助手。', options: ['assistant', 'will', 'an', 'I', 'hire', 'friend', 'my'], correctAnswer: 'I will hire my friend an assistant', explanation: 'Hire sb sth (双宾语结构：给某人雇佣某物/人)。' },
+  { id: 'd5_3', type: 'choice', category: 'Phrase', prompt: 'I can ______ with your homework.', options: ['give you a hand', 'give you a leg', 'give you a head', 'give you a foot'], correctAnswer: 'give you a hand', explanation: 'Give sb a hand with sth (帮某人一把)。' },
+  { id: 'd5_4', type: 'choice', category: 'Business', prompt: 'We need to ______ costs down.', options: ['keep', 'stay', 'make', 'do'], correctAnswer: 'keep', explanation: 'Keep costs down (控制成本/保持低成本)。' },
+  { id: 'd5_5', type: 'choice', category: 'Vocab', prompt: 'That price sounds ______.', options: ['reasonable', 'reason', 'reasoning', 'reasonably'], correctAnswer: 'reasonable', explanation: 'Reasonable (合理的)。' },
+  { id: 'd5_6', type: 'ordering', category: 'Email', prompt: '连词成句：我写邮件是为了与您分享文件。', options: ['writing', 'you', 'to', 'share', 'the', 'I', 'document', 'with', 'am'], correctAnswer: 'I am writing to share with you the document', explanation: '邮件常用开场白：I am writing to share with you...' },
+  { id: 'd5_7', type: 'choice', category: 'Email', prompt: 'Jane is now ______ this project.', options: ['in charge of', 'in charge with', 'on charge of', 'at charge of'], correctAnswer: 'in charge of', explanation: 'In charge of (负责)。' },
+  { id: 'd5_8', type: 'choice', category: 'Email', prompt: 'The attached file is ______.', options: ['for your review', 'for your looking', 'for your view', 'for your seeing'], correctAnswer: 'for your review', explanation: 'For your review (供您审阅)。' },
+  { id: 'd5_9', type: 'ordering', category: 'Email', prompt: '连词成句：能不能请团队花点时间过目？', options: ['go', 'moment', 'the', 'through', 'take', 'it', 'a', 'team', 'Could', 'to'], correctAnswer: 'Could the team take a moment to go through it', explanation: 'Take a moment to go through it (花点时间过目/浏览)。' },
+  { id: 'd5_10', type: 'translate', category: 'Email', prompt: 'Translate: "请注意，部分内容需要更新。"', correctAnswer: 'Please kindly note that sections are to be updated.', explanation: 'Please kindly note that... (请注意...); be to be updated (需要被更新)。' },
+  { id: 'd5_11', type: 'translate', category: 'Email', prompt: 'Translate: "您的反馈在1月5日前将受到极大感激。"', correctAnswer: 'Your input would be greatly appreciated by Jan 5th.', explanation: 'Input (反馈/意见); would be greatly appreciated (将不胜感激)。' },
+  { id: 'd5_12', type: 'translate', category: 'Homework', prompt: 'Translate: "这份SOP需要你的团队更新联系信息。"', correctAnswer: 'The SOP needs to be updated with contact information by your team.', explanation: 'Update with... (用...更新)。' },
+  { id: 'd5_13', type: 'choice', category: 'Homework', prompt: '______, we confirmed this date last week.', options: ['If you remember', 'If you forget', 'As you know', 'However'], correctAnswer: 'If you remember', explanation: 'If you remember (如果您还记得/唤起记忆)。' },
+  { id: 'd5_14', type: 'ordering', category: 'Greeting', prompt: '连词成句：我想把你的新助手介绍给你。', options: ['your', 'introduce', 'I', 'like', 'to', 'you', 'new', 'to', 'would', 'assistant'], correctAnswer: 'I would like to introduce you to your new assistant', explanation: 'Introduce sb to sb (介绍某人给某人)。' },
+  { id: 'd5_15', type: 'choice', category: 'Phrase', prompt: '______ we go to the cinema?', options: ['What if', 'How if', 'Why if', 'When if'], correctAnswer: 'What if', explanation: 'What if... (如果...怎么样/提议)。' }
+];
 
 // ==========================================
 // 题目生成引擎 (GENERATOR ENGINE)
@@ -148,10 +165,11 @@ function getRandomItem<T>(array: T[], seed: number): T {
 
 const generateDailyQuestions = (day: number): Question[] => {
   
-  // 1. 优先检查是否有固定题库 (Day 2, 3, 4)
+  // 1. 优先检查是否有固定题库 (Day 2, 3, 4, 5)
   if (day === 2) return DAY_2_FIXED;
   if (day === 3) return DAY_3_FIXED;
   if (day === 4) return DAY_4_FIXED;
+  if (day === 5) return DAY_5_FIXED;
 
   // 2. 如果没有固定题库，则使用算法生成
   const questions: Question[] = [];
@@ -284,6 +302,7 @@ const HomePractice: React.FC = () => {
   
   // 2. Restore progress SPECIFIC to that day
   const [currentIndex, setCurrentIndex] = useState(() => getDayProgress(getLastActiveDay()));
+  const [retryCount, setRetryCount] = useState(0);
 
   const [completed, setCompleted] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -292,7 +311,20 @@ const HomePractice: React.FC = () => {
   const [translateInput, setTranslateInput] = useState('');
   
   // Generate questions for the current day
-  const currentQuestions = useMemo(() => generateDailyQuestions(currentDay), [currentDay]);
+  const currentQuestions = useMemo(() => {
+    const questions = generateDailyQuestions(currentDay);
+    // Shuffle options for ALL questions to prevent "Answer is always A" pattern
+    // This runs whenever currentDay changes OR retryCount changes (forcing a reshuffle)
+    return questions.map(q => {
+        const newQ = { ...q }; // Shallow copy
+        if (newQ.options) {
+            // Random shuffle using Math.random() for unpredictability
+            newQ.options = [...newQ.options].sort(() => Math.random() - 0.5);
+        }
+        return newQ;
+    });
+  }, [currentDay, retryCount]);
+  
   const currentQ = currentQuestions[currentIndex];
   
   // Check if we restored a completed state
@@ -328,6 +360,7 @@ const HomePractice: React.FC = () => {
     // 4. Reset UI state
     setCompleted(false);
     resetQuestionState();
+    setRetryCount(0); // Reset shuffle
   };
 
   const handleRestartDay = () => {
@@ -335,6 +368,7 @@ const HomePractice: React.FC = () => {
     setCompleted(false);
     resetQuestionState();
     saveDayProgress(currentDay, 0); // Force save reset
+    setRetryCount(c => c + 1); // Trigger option reshuffle
   };
 
   // Direct reset, no confirmation dialog to prevent issues
@@ -385,14 +419,25 @@ const HomePractice: React.FC = () => {
   };
 
   const checkTranslate = () => {
-    const cleanUser = translateInput.toLowerCase().replace(/[^a-z ]/g, '');
-    const cleanAns = (currentQ.correctAnswer as string).toLowerCase().replace(/[^a-z ]/g, '');
+    // 1. Strict Normalization (ignores spaces and punctuation)
+    const normalize = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const cleanUser = normalize(translateInput);
+    const cleanAns = normalize(currentQ.correctAnswer as string);
     
-    const ansWords = cleanAns.split(' ');
-    const userWords = cleanUser.split(' ');
-    const matches = ansWords.filter(w => userWords.includes(w)).length;
+    if (cleanUser === cleanAns) {
+        setFeedback('correct');
+        return;
+    }
 
-    if (matches / ansWords.length > 0.6) {
+    // 2. Fuzzy Matching (fallback)
+    const ansWords = cleanAns.split(' '); // Note: normalize removes spaces, so this fallback is weak if normalized fails
+    // Let's use a slightly less strict normalization for fuzzy match
+    const fuzzyUser = translateInput.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
+    const fuzzyAns = (currentQ.correctAnswer as string).toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
+    
+    const matches = fuzzyAns.filter(w => fuzzyUser.includes(w)).length;
+
+    if (matches / fuzzyAns.length > 0.6) {
       setFeedback('correct');
     } else {
       setFeedback('wrong');
@@ -411,6 +456,15 @@ const HomePractice: React.FC = () => {
       // We also update index to length so it persists as "done"
       setCurrentIndex(currentIndex + 1);
     }
+  };
+
+  // Helper to count word occurrences for ordering logic
+  const getUsedCounts = () => {
+    const counts: Record<string, number> = {};
+    orderingState.forEach(w => {
+        counts[w] = (counts[w] || 0) + 1;
+    });
+    return counts;
   };
 
   if (completed || currentIndex >= currentQuestions.length) {
@@ -541,15 +595,29 @@ const HomePractice: React.FC = () => {
                     ))}
                  </div>
                  <div className="flex flex-wrap gap-2">
-                    {currentQ.options?.filter(w => !orderingState.includes(w)).map((word, i) => (
-                       <button
-                         key={i}
-                         onClick={() => handleOrderClick(word)}
-                         className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 text-sm shadow-sm active:scale-95 transition-transform"
-                       >
-                         {word}
-                       </button>
-                    ))}
+                    {/* Render logic: Count instances to handle duplicate words */}
+                    {(() => {
+                        const usedCounts = getUsedCounts();
+                        return currentQ.options?.map((word, i) => {
+                           let isUsed = false;
+                           if ((usedCounts[word] || 0) > 0) {
+                               isUsed = true;
+                               usedCounts[word]--; // Mutate local count to hide the correct number of instances
+                           }
+                           
+                           if (isUsed) return null; // Don't render used buttons
+
+                           return (
+                               <button
+                                 key={i}
+                                 onClick={() => handleOrderClick(word)}
+                                 className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 text-sm shadow-sm active:scale-95 transition-transform"
+                               >
+                                 {word}
+                               </button>
+                           );
+                        });
+                    })()}
                  </div>
                  {!feedback && orderingState.length > 0 && (
                    <div className="flex gap-2 mt-2">
