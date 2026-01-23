@@ -73,79 +73,117 @@ const TOPIC_SCHEDULE = [
 ];
 
 // ==========================================
-// 固定题库 (FIXED SETS FOR SPECIFIC DAYS)
+// 固定题库 (FIXED SETS) - SHIFTED FOR 5 DAYS
 // ==========================================
 
+// 原 Day 2 -> 现 Day 1
+const DAY_1_FIXED: Question[] = [
+  { id: 'd1_1', type: 'choice', category: 'Grammar', prompt: 'I ______ working on this project now.', options: ['am', 'is', 'are', 'be'], correctAnswer: 'am', explanation: 'be doing (正在做)。I 后面接 am。' },
+  { id: 'd1_2', type: 'choice', category: 'Grammar', prompt: 'She ______ have money.', options: ["don't", "doesn't", "isn't", "not"], correctAnswer: "doesn't", explanation: '实义动词(have)的否定形式需要助动词。第三人称单数用 doesn\'t。' },
+  { id: 'd1_3', type: 'choice', category: 'Vocab', prompt: 'The water is free. It is ______.', options: ['complimentary', 'expensive', 'comment', 'casual'], correctAnswer: 'complimentary', explanation: 'Complimentary = Free (免费/赠送的)。' },
+  { id: 'd1_4', type: 'ordering', category: 'Request', prompt: '连词成句：你能帮我拿下那杯水吗？', options: ['grab', 'please', 'Could', 'you', 'glass', 'the'], correctAnswer: 'Could you please grab the glass', explanation: 'Grab (抓取/拿)。Could you please...?' },
+  { id: 'd1_5', type: 'choice', category: 'Politeness', prompt: 'Instead of "I want you to go...", a more polite way is:', options: ['I would recommend you to go...', 'You must go...', 'Go now...', 'I say go...'], correctAnswer: 'I would recommend you to go...', explanation: 'Using "would recommend" is softer and more professional.' },
+  { id: 'd1_6', type: 'translate', category: 'Email', prompt: 'Translate: "请查收附件中的 HGRAC 总结。"', correctAnswer: 'Please find the HGRAC summary attached.', explanation: 'Standard email phrase: Please find... attached.' },
+  { id: 'd1_7', type: 'choice', category: 'Vocab', prompt: 'I like to wear ______ clothes, not fancy ones.', options: ['casual', 'formal', 'uniform', 'impatient'], correctAnswer: 'casual', explanation: 'Casual (休闲的) vs Fancy (精致/花哨的)。' },
+  { id: 'd1_8', type: 'choice', category: 'Vocab', prompt: 'Do you have any ______ on this proposal?', options: ['comments', 'commands', 'commons', 'cements'], correctAnswer: 'comments', explanation: 'Comment (评论/意见)。' },
+  { id: 'd1_9', type: 'ordering', category: 'Phrase', prompt: '连词成句：我会选蔬菜。', options: ['go', 'I', 'will', 'with', 'vegetable', 'the'], correctAnswer: 'I will go with the vegetable', explanation: 'Go with = Choose/Select (选择)。' },
+  { id: 'd1_10', type: 'choice', category: 'Vocab', prompt: 'The child is very ______. He cannot wait.', options: ['impatient', 'patient', 'important', 'impact'], correctAnswer: 'impatient', explanation: 'Impatient (不耐烦的)。' },
+  { id: 'd1_11', type: 'translate', category: 'Email', prompt: 'Translate: "我们的处理计划还没有改变。"', correctAnswer: 'Our disposal plan has not yet been changed.', explanation: 'Disposal plan (处置计划)。Not yet (尚未)。' },
+  { id: 'd1_12', type: 'choice', category: 'Email', prompt: 'Regarding the samples, please let me know if you need any ______ information.', options: ['further', 'farther', 'future', 'father'], correctAnswer: 'further', explanation: 'Further information (进一步的信息)。' },
+  { id: 'd1_13', type: 'choice', category: 'Grammar', prompt: 'I ______ recommend (=suggest) this method.', options: ['would', 'will', 'did', 'do'], correctAnswer: 'would', explanation: 'Would recommend (委婉建议)。' },
+  { id: 'd1_14', type: 'choice', category: 'Vocab', prompt: 'Which word means "working on a project"?', options: ['Doing tasks for it', 'Stopping it', 'Watching it', 'Hating it'], correctAnswer: 'Doing tasks for it', explanation: 'Working on = Processing/Handling.' },
+  { id: 'd1_15', type: 'translate', category: 'Email', prompt: 'Translate: "我们将提供数据直到12月30日。"', correctAnswer: 'We will provide the data until December 30.', explanation: 'Provide (提供)。' }
+];
+
+// 原 Day 3 -> 现 Day 2
 const DAY_2_FIXED: Question[] = [
-  { id: 'd2_1', type: 'choice', category: 'Grammar', prompt: 'I ______ working on this project now.', options: ['am', 'is', 'are', 'be'], correctAnswer: 'am', explanation: 'be doing (正在做)。I 后面接 am。' },
-  { id: 'd2_2', type: 'choice', category: 'Grammar', prompt: 'She ______ have money.', options: ["don't", "doesn't", "isn't", "not"], correctAnswer: "doesn't", explanation: '实义动词(have)的否定形式需要助动词。第三人称单数用 doesn\'t。' },
-  { id: 'd2_3', type: 'choice', category: 'Vocab', prompt: 'The water is free. It is ______.', options: ['complimentary', 'expensive', 'comment', 'casual'], correctAnswer: 'complimentary', explanation: 'Complimentary = Free (免费/赠送的)。' },
-  { id: 'd2_4', type: 'ordering', category: 'Request', prompt: '连词成句：你能帮我拿下那杯水吗？', options: ['grab', 'please', 'Could', 'you', 'glass', 'the'], correctAnswer: 'Could you please grab the glass', explanation: 'Grab (抓取/拿)。Could you please...?' },
-  { id: 'd2_5', type: 'choice', category: 'Politeness', prompt: 'Instead of "I want you to go...", a more polite way is:', options: ['I would recommend you to go...', 'You must go...', 'Go now...', 'I say go...'], correctAnswer: 'I would recommend you to go...', explanation: 'Using "would recommend" is softer and more professional.' },
-  { id: 'd2_6', type: 'translate', category: 'Email', prompt: 'Translate: "请查收附件中的 HGRAC 总结。"', correctAnswer: 'Please find the HGRAC summary attached.', explanation: 'Standard email phrase: Please find... attached.' },
-  { id: 'd2_7', type: 'choice', category: 'Vocab', prompt: 'I like to wear ______ clothes, not fancy ones.', options: ['casual', 'formal', 'uniform', 'impatient'], correctAnswer: 'casual', explanation: 'Casual (休闲的) vs Fancy (精致/花哨的)。' },
-  { id: 'd2_8', type: 'choice', category: 'Vocab', prompt: 'Do you have any ______ on this proposal?', options: ['comments', 'commands', 'commons', 'cements'], correctAnswer: 'comments', explanation: 'Comment (评论/意见)。' },
-  { id: 'd2_9', type: 'ordering', category: 'Phrase', prompt: '连词成句：我会选蔬菜。', options: ['go', 'I', 'will', 'with', 'vegetable', 'the'], correctAnswer: 'I will go with the vegetable', explanation: 'Go with = Choose/Select (选择)。' },
-  { id: 'd2_10', type: 'choice', category: 'Vocab', prompt: 'The child is very ______. He cannot wait.', options: ['impatient', 'patient', 'important', 'impact'], correctAnswer: 'impatient', explanation: 'Impatient (不耐烦的)。' },
-  { id: 'd2_11', type: 'translate', category: 'Email', prompt: 'Translate: "我们的处理计划还没有改变。"', correctAnswer: 'Our disposal plan has not yet been changed.', explanation: 'Disposal plan (处置计划)。Not yet (尚未)。' },
-  { id: 'd2_12', type: 'choice', category: 'Email', prompt: 'Regarding the samples, please let me know if you need any ______ information.', options: ['further', 'farther', 'future', 'father'], correctAnswer: 'further', explanation: 'Further information (进一步的信息)。' },
-  { id: 'd2_13', type: 'choice', category: 'Grammar', prompt: 'I ______ recommend (=suggest) this method.', options: ['would', 'will', 'did', 'do'], correctAnswer: 'would', explanation: 'Would recommend (委婉建议)。' },
-  { id: 'd2_14', type: 'choice', category: 'Vocab', prompt: 'Which word means "working on a project"?', options: ['Doing tasks for it', 'Stopping it', 'Watching it', 'Hating it'], correctAnswer: 'Doing tasks for it', explanation: 'Working on = Processing/Handling.' },
-  { id: 'd2_15', type: 'translate', category: 'Email', prompt: 'Translate: "我们将提供数据直到12月30日。"', correctAnswer: 'We will provide the data until December 30.', explanation: 'Provide (提供)。' }
+  { id: 'd2_1', type: 'choice', category: 'Health', prompt: 'I am ______ in sick today.', options: ['calling', 'shouting', 'telling', 'saying'], correctAnswer: 'calling', explanation: 'Call in sick (打电话请病假)。' },
+  { id: 'd2_2', type: 'choice', category: 'Health', prompt: 'She is coming ______ with a cold.', options: ['down', 'up', 'out', 'in'], correctAnswer: 'down', explanation: 'Come down with (病倒/染上病)。' },
+  { id: 'd2_3', type: 'choice', category: 'Vocab', prompt: 'Could you help me ______ the data from the hard drive?', options: ['recover', 'cover', 'discover', 'uncover'], correctAnswer: 'recover', explanation: 'Recover (恢复数据/恢复健康)。' },
+  { id: 'd2_4', type: 'ordering', category: 'Work', prompt: '连词成句：你想明天请一天假吗？', options: ['take', 'to', 'Do', 'want', 'you', 'day', 'off', 'a'], correctAnswer: 'Do you want to take a day off', explanation: 'Take a day off (请一天假)。' },
+  { id: 'd2_5', type: 'choice', category: 'Grammar', prompt: 'She ______ hoping to be happy every day.', options: ['was', 'is', 'did', 'does'], correctAnswer: 'was', explanation: 'She was hoping (她原本希望...)。' },
+  { id: 'd2_6', type: 'translate', category: 'Email', prompt: 'Translate: "请见下方的关键更新。"', correctAnswer: 'Please see below for the key updates.', explanation: 'Please see below (请见下方)。' },
+  { id: 'd2_7', type: 'choice', category: 'Email', prompt: 'SOP Update: Effective ______: 2025-12-12.', options: ['Date', 'Day', 'Time', 'Year'], correctAnswer: 'Date', explanation: 'Effective Date (生效日期)。' },
+  { id: 'd2_8', type: 'choice', category: 'Lab', prompt: 'The Testing Team is ______ a two-person review.', options: ['conducting', 'making', 'doing', 'working'], correctAnswer: 'conducting', explanation: 'Conduct a review (进行审查)。' },
+  { id: 'd2_9', type: 'choice', category: 'Email', prompt: 'Mock Data Upload: To be ______ once access is granted.', options: ['initiated', 'initial', 'started', 'start'], correctAnswer: 'initiated', explanation: 'Initiated (启动/开始)，比 started 更正式。' },
+  { id: 'd2_10', type: 'ordering', category: 'Email', prompt: '连词成句：SOP的已发布版本在附件里。', options: ['The', 'released', 'version', 'attached', 'is'], correctAnswer: 'The released version is attached', explanation: 'Released version (发布版本)。' },
+  { id: 'd2_11', type: 'choice', category: 'Lab', prompt: 'Please ensure volumes are recorded as ______ (e.g., 1, 2, 3).', options: ['integers', 'decimals', 'fractions', 'letters'], correctAnswer: 'integers', explanation: 'Integers (整数)。' },
+  { id: 'd2_12', type: 'translate', category: 'Email', prompt: 'Translate: "如有任何问题，请随时联系。" (Use "reach out")', correctAnswer: 'Please feel free to reach out with any questions.', explanation: 'Reach out = Contact.' },
+  { id: 'd2_13', type: 'choice', category: 'Lab', prompt: 'Mock Data Reconciliation: ______ feedback from JNJ.', options: ['Pending', 'Waiting', 'Stopping', 'Holding'], correctAnswer: 'Pending', explanation: 'Pending (待定/等待...)。' },
+  { id: 'd2_14', type: 'choice', category: 'Vocab', prompt: 'It is ______ to go to sleep early.', options: ['important', 'impossible', 'impatient', 'impact'], correctAnswer: 'important', explanation: 'It is important to... (做...很重要)。' },
+  { id: 'd2_15', type: 'translate', category: 'Phrase', prompt: 'Translate: "其实，她很伤心。" (Use "Actually")', correctAnswer: 'Actually, she is sad.', explanation: 'Actually (其实/实际上)。' }
 ];
 
+// 原 Day 4 -> 现 Day 3
 const DAY_3_FIXED: Question[] = [
-  { id: 'd3_1', type: 'choice', category: 'Health', prompt: 'I am ______ in sick today.', options: ['calling', 'shouting', 'telling', 'saying'], correctAnswer: 'calling', explanation: 'Call in sick (打电话请病假)。' },
-  { id: 'd3_2', type: 'choice', category: 'Health', prompt: 'She is coming ______ with a cold.', options: ['down', 'up', 'out', 'in'], correctAnswer: 'down', explanation: 'Come down with (病倒/染上病)。' },
-  { id: 'd3_3', type: 'choice', category: 'Vocab', prompt: 'Could you help me ______ the data from the hard drive?', options: ['recover', 'cover', 'discover', 'uncover'], correctAnswer: 'recover', explanation: 'Recover (恢复数据/恢复健康)。' },
-  { id: 'd3_4', type: 'ordering', category: 'Work', prompt: '连词成句：你想明天请一天假吗？', options: ['take', 'to', 'Do', 'want', 'you', 'day', 'off', 'a'], correctAnswer: 'Do you want to take a day off', explanation: 'Take a day off (请一天假)。' },
-  { id: 'd3_5', type: 'choice', category: 'Grammar', prompt: 'She ______ hoping to be happy every day.', options: ['was', 'is', 'did', 'does'], correctAnswer: 'was', explanation: 'She was hoping (她原本希望...)。' },
-  { id: 'd3_6', type: 'translate', category: 'Email', prompt: 'Translate: "请见下方的关键更新。"', correctAnswer: 'Please see below for the key updates.', explanation: 'Please see below (请见下方)。' },
-  { id: 'd3_7', type: 'choice', category: 'Email', prompt: 'SOP Update: Effective ______: 2025-12-12.', options: ['Date', 'Day', 'Time', 'Year'], correctAnswer: 'Date', explanation: 'Effective Date (生效日期)。' },
-  { id: 'd3_8', type: 'choice', category: 'Lab', prompt: 'The Testing Team is ______ a two-person review.', options: ['conducting', 'making', 'doing', 'working'], correctAnswer: 'conducting', explanation: 'Conduct a review (进行审查)。' },
-  { id: 'd3_9', type: 'choice', category: 'Email', prompt: 'Mock Data Upload: To be ______ once access is granted.', options: ['initiated', 'initial', 'started', 'start'], correctAnswer: 'initiated', explanation: 'Initiated (启动/开始)，比 started 更正式。' },
-  { id: 'd3_10', type: 'ordering', category: 'Email', prompt: '连词成句：SOP的已发布版本在附件里。', options: ['The', 'released', 'version', 'attached', 'is'], correctAnswer: 'The released version is attached', explanation: 'Released version (发布版本)。' },
-  { id: 'd3_11', type: 'choice', category: 'Lab', prompt: 'Please ensure volumes are recorded as ______ (e.g., 1, 2, 3).', options: ['integers', 'decimals', 'fractions', 'letters'], correctAnswer: 'integers', explanation: 'Integers (整数)。' },
-  { id: 'd3_12', type: 'translate', category: 'Email', prompt: 'Translate: "如有任何问题，请随时联系。" (Use "reach out")', correctAnswer: 'Please feel free to reach out with any questions.', explanation: 'Reach out = Contact.' },
-  { id: 'd3_13', type: 'choice', category: 'Lab', prompt: 'Mock Data Reconciliation: ______ feedback from JNJ.', options: ['Pending', 'Waiting', 'Stopping', 'Holding'], correctAnswer: 'Pending', explanation: 'Pending (待定/等待...)。' },
-  { id: 'd3_14', type: 'choice', category: 'Vocab', prompt: 'It is ______ to go to sleep early.', options: ['important', 'impossible', 'impatient', 'impact'], correctAnswer: 'important', explanation: 'It is important to... (做...很重要)。' },
-  { id: 'd3_15', type: 'translate', category: 'Phrase', prompt: 'Translate: "其实，她很伤心。" (Use "Actually")', correctAnswer: 'Actually, she is sad.', explanation: 'Actually (其实/实际上)。' }
+  { id: 'd3_1', type: 'choice', category: 'Travel', prompt: 'I would like to make a ______ for 6 people.', options: ['reservation', 'preservation', 'observation', 'conservation'], correctAnswer: 'reservation', explanation: 'Make a reservation (预定)。' },
+  { id: 'd3_2', type: 'choice', category: 'Grammar', prompt: 'He ______ be Tom\'s father. They look exactly alike!', options: ['must', 'can', 'should', 'need'], correctAnswer: 'must', explanation: 'Must be (表示肯定的推测)。' },
+  { id: 'd3_3', type: 'choice', category: 'Grammar', prompt: 'There ______ to be a delay with your order.', options: ['seems', 'looks', 'sees', 'watches'], correctAnswer: 'seems', explanation: 'There seems to be... (看起来好像有...)。' },
+  { id: 'd3_4', type: 'choice', category: 'Vocab', prompt: 'The hotel is full. It is ______.', options: ['overbooked', 'overcooked', 'overlooked', 'overworked'], correctAnswer: 'overbooked', explanation: 'Overbooked (超售/订满了)。' },
+  { id: 'd3_5', type: 'ordering', category: 'Email', prompt: '连词成句：特此通知，对于样品PSCR...', options: ['inform', 'Just', 'to', 'for', 'sample', 'PSCR'], correctAnswer: 'Just to inform for sample PSCR', explanation: 'Just to inform (特此通知/告知)，常用邮件开场。' },
+  { id: 'd3_6', type: 'choice', category: 'Lab Error', prompt: 'The tissue sections were ______ placed.', options: ['wrongly', 'badly', 'mistake', 'false'], correctAnswer: 'wrongly', explanation: 'Wrongly placed (放错位置)。' },
+  { id: 'd3_7', type: 'choice', category: 'Email', prompt: '______, we would need to re-run the IHC test.', options: ['As such', 'So that', 'Because', 'But'], correctAnswer: 'As such', explanation: 'As such (因此/正因如此)，正式的 So。' },
+  { id: 'd3_8', type: 'choice', category: 'Lab', prompt: 'We need to ______ the test using spare slides.', options: ['re-run', 're-do', 're-make', 're-play'], correctAnswer: 're-run', explanation: 'Re-run a test (重新运行测试)。' },
+  { id: 'd3_9', type: 'translate', category: 'Email', prompt: 'Translate: "请协助反馈给站点。" (Use "assist")', correctAnswer: 'Please assist to feedback to the site.', explanation: 'Please assist to... (请协助做...)。' },
+  { id: 'd3_10', type: 'choice', category: 'Admin', prompt: 'Please ______ them to double-check the protocol.', options: ['remind', 'remember', 'remain', 'remove'], correctAnswer: 'remind', explanation: 'Remind (提醒)。' },
+  { id: 'd3_11', type: 'choice', category: 'Travel', prompt: 'I\'d like to ______ now. (At a hotel desk)', options: ['check in', 'check out', 'check up', 'check on'], correctAnswer: 'check in', explanation: 'Check in (办理入住)。' },
+  { id: 'd3_12', type: 'ordering', category: 'Grammar', prompt: '连词成句：你看起来有点累。', options: ['look', 'You', 'little', 'a', 'tired'], correctAnswer: 'You look a little tired', explanation: 'Look + adj (看起来...)。' },
+  { id: 'd3_13', type: 'choice', category: 'Vocab', prompt: 'If you ______ others, they will help you.', options: ['respect', 'inspect', 'expect', 'suspect'], correctAnswer: 'respect', explanation: 'Respect (尊重)。' },
+  { id: 'd3_14', type: 'choice', category: 'Email', prompt: 'Please ______ that the tissue sections are placed correctly.', options: ['ensure', 'sure', 'insure', 'assure'], correctAnswer: 'ensure', explanation: 'Ensure (确保)。' },
+  { id: 'd3_15', type: 'translate', category: 'Vocab', prompt: 'Translate: "不幸的是" (beginning with U)', correctAnswer: 'Unfortunately', explanation: 'Unfortunately (不幸的是/遗憾的是)。' }
 ];
 
+// 原 Day 5 -> 现 Day 4
 const DAY_4_FIXED: Question[] = [
-  { id: 'd4_1', type: 'choice', category: 'Travel', prompt: 'I would like to make a ______ for 6 people.', options: ['reservation', 'preservation', 'observation', 'conservation'], correctAnswer: 'reservation', explanation: 'Make a reservation (预定)。' },
-  { id: 'd4_2', type: 'choice', category: 'Grammar', prompt: 'He ______ be Tom\'s father. They look exactly alike!', options: ['must', 'can', 'should', 'need'], correctAnswer: 'must', explanation: 'Must be (表示肯定的推测)。' },
-  { id: 'd4_3', type: 'choice', category: 'Grammar', prompt: 'There ______ to be a delay with your order.', options: ['seems', 'looks', 'sees', 'watches'], correctAnswer: 'seems', explanation: 'There seems to be... (看起来好像有...)。' },
-  { id: 'd4_4', type: 'choice', category: 'Vocab', prompt: 'The hotel is full. It is ______.', options: ['overbooked', 'overcooked', 'overlooked', 'overworked'], correctAnswer: 'overbooked', explanation: 'Overbooked (超售/订满了)。' },
-  { id: 'd4_5', type: 'ordering', category: 'Email', prompt: '连词成句：特此通知，对于样品PSCR...', options: ['inform', 'Just', 'to', 'for', 'sample', 'PSCR'], correctAnswer: 'Just to inform for sample PSCR', explanation: 'Just to inform (特此通知/告知)，常用邮件开场。' },
-  { id: 'd4_6', type: 'choice', category: 'Lab Error', prompt: 'The tissue sections were ______ placed.', options: ['wrongly', 'badly', 'mistake', 'false'], correctAnswer: 'wrongly', explanation: 'Wrongly placed (放错位置)。' },
-  { id: 'd4_7', type: 'choice', category: 'Email', prompt: '______, we would need to re-run the IHC test.', options: ['As such', 'So that', 'Because', 'But'], correctAnswer: 'As such', explanation: 'As such (因此/正因如此)，正式的 So。' },
-  { id: 'd4_8', type: 'choice', category: 'Lab', prompt: 'We need to ______ the test using spare slides.', options: ['re-run', 're-do', 're-make', 're-play'], correctAnswer: 're-run', explanation: 'Re-run a test (重新运行测试)。' },
-  { id: 'd4_9', type: 'translate', category: 'Email', prompt: 'Translate: "请协助反馈给站点。" (Use "assist")', correctAnswer: 'Please assist to feedback to the site.', explanation: 'Please assist to... (请协助做...)。' },
-  { id: 'd4_10', type: 'choice', category: 'Admin', prompt: 'Please ______ them to double-check the protocol.', options: ['remind', 'remember', 'remain', 'remove'], correctAnswer: 'remind', explanation: 'Remind (提醒)。' },
-  { id: 'd4_11', type: 'choice', category: 'Travel', prompt: 'I\'d like to ______ now. (At a hotel desk)', options: ['check in', 'check out', 'check up', 'check on'], correctAnswer: 'check in', explanation: 'Check in (办理入住)。' },
-  { id: 'd4_12', type: 'ordering', category: 'Grammar', prompt: '连词成句：你看起来有点累。', options: ['look', 'You', 'little', 'a', 'tired'], correctAnswer: 'You look a little tired', explanation: 'Look + adj (看起来...)。' },
-  { id: 'd4_13', type: 'choice', category: 'Vocab', prompt: 'If you ______ others, they will help you.', options: ['respect', 'inspect', 'expect', 'suspect'], correctAnswer: 'respect', explanation: 'Respect (尊重)。' },
-  { id: 'd4_14', type: 'choice', category: 'Email', prompt: 'Please ______ that the tissue sections are placed correctly.', options: ['ensure', 'sure', 'insure', 'assure'], correctAnswer: 'ensure', explanation: 'Ensure (确保)。' },
-  { id: 'd4_15', type: 'translate', category: 'Vocab', prompt: 'Translate: "不幸的是" (beginning with U)', correctAnswer: 'Unfortunately', explanation: 'Unfortunately (不幸的是/遗憾的是)。' }
+  { id: 'd4_1', type: 'choice', category: 'Phrase', prompt: 'Could you come and ______ the project?', options: ['take a look at', 'watch at', 'see at', 'look'], correctAnswer: 'take a look at', explanation: 'Take a look at (看一看/检查)。' },
+  { id: 'd4_2', type: 'ordering', category: 'Grammar', prompt: '连词成句：我会给我朋友雇一个助手。', options: ['assistant', 'will', 'an', 'I', 'hire', 'friend', 'my'], correctAnswer: 'I will hire my friend an assistant', explanation: 'Hire sb sth (双宾语结构：给某人雇佣某物/人)。' },
+  { id: 'd4_3', type: 'choice', category: 'Phrase', prompt: 'I can ______ with your homework.', options: ['give you a hand', 'give you a leg', 'give you a head', 'give you a foot'], correctAnswer: 'give you a hand', explanation: 'Give sb a hand with sth (帮某人一把)。' },
+  { id: 'd4_4', type: 'choice', category: 'Business', prompt: 'We need to ______ costs down.', options: ['keep', 'stay', 'make', 'do'], correctAnswer: 'keep', explanation: 'Keep costs down (控制成本/保持低成本)。' },
+  { id: 'd4_5', type: 'choice', category: 'Vocab', prompt: 'That price sounds ______.', options: ['reasonable', 'reason', 'reasoning', 'reasonably'], correctAnswer: 'reasonable', explanation: 'Reasonable (合理的)。' },
+  { id: 'd4_6', type: 'ordering', category: 'Email', prompt: '连词成句：我写邮件是为了与您分享文件。', options: ['writing', 'you', 'to', 'share', 'the', 'I', 'document', 'with', 'am'], correctAnswer: 'I am writing to share with you the document', explanation: '邮件常用开场白：I am writing to share with you...' },
+  { id: 'd4_7', type: 'choice', category: 'Email', prompt: 'Jane is now ______ this project.', options: ['in charge of', 'in charge with', 'on charge of', 'at charge of'], correctAnswer: 'in charge of', explanation: 'In charge of (负责)。' },
+  { id: 'd4_8', type: 'choice', category: 'Email', prompt: 'The attached file is ______.', options: ['for your review', 'for your looking', 'for your view', 'for your seeing'], correctAnswer: 'for your review', explanation: 'For your review (供您审阅)。' },
+  { id: 'd4_9', type: 'ordering', category: 'Email', prompt: '连词成句：能不能请团队花点时间过目？', options: ['go', 'moment', 'the', 'through', 'take', 'it', 'a', 'team', 'Could', 'to'], correctAnswer: 'Could the team take a moment to go through it', explanation: 'Take a moment to go through it (花点时间过目/浏览)。' },
+  { id: 'd4_10', type: 'translate', category: 'Email', prompt: 'Translate: "请注意，部分内容需要更新。"', correctAnswer: 'Please kindly note that sections are to be updated.', explanation: 'Please kindly note that... (请注意...); be to be updated (需要被更新)。' },
+  { id: 'd4_11', type: 'translate', category: 'Email', prompt: 'Translate: "您的反馈在1月5日前将受到极大感激。"', correctAnswer: 'Your input would be greatly appreciated by Jan 5th.', explanation: 'Input (反馈/意见); would be greatly appreciated (将不胜感激)。' },
+  { id: 'd4_12', type: 'translate', category: 'Homework', prompt: 'Translate: "这份SOP需要你的团队更新联系信息。"', correctAnswer: 'The SOP needs to be updated with contact information by your team.', explanation: 'Update with... (用...更新)。' },
+  { id: 'd4_13', type: 'choice', category: 'Homework', prompt: '______, we confirmed this date last week.', options: ['If you remember', 'If you forget', 'As you know', 'However'], correctAnswer: 'If you remember', explanation: 'If you remember (如果您还记得/唤起记忆)。' },
+  { id: 'd4_14', type: 'ordering', category: 'Greeting', prompt: '连词成句：我想把你的新助手介绍给你。', options: ['your', 'introduce', 'I', 'like', 'to', 'you', 'new', 'to', 'would', 'assistant'], correctAnswer: 'I would like to introduce you to your new assistant', explanation: 'Introduce sb to sb (介绍某人给某人)。' },
+  { id: 'd4_15', type: 'choice', category: 'Phrase', prompt: '______ we go to the cinema?', options: ['What if', 'How if', 'Why if', 'When if'], correctAnswer: 'What if', explanation: 'What if... (如果...怎么样/提议)。' }
 ];
 
+// 原 Day 6 -> 现 Day 5
 const DAY_5_FIXED: Question[] = [
-  { id: 'd5_1', type: 'choice', category: 'Phrase', prompt: 'Could you come and ______ the project?', options: ['take a look at', 'watch at', 'see at', 'look'], correctAnswer: 'take a look at', explanation: 'Take a look at (看一看/检查)。' },
-  { id: 'd5_2', type: 'ordering', category: 'Grammar', prompt: '连词成句：我会给我朋友雇一个助手。', options: ['assistant', 'will', 'an', 'I', 'hire', 'friend', 'my'], correctAnswer: 'I will hire my friend an assistant', explanation: 'Hire sb sth (双宾语结构：给某人雇佣某物/人)。' },
-  { id: 'd5_3', type: 'choice', category: 'Phrase', prompt: 'I can ______ with your homework.', options: ['give you a hand', 'give you a leg', 'give you a head', 'give you a foot'], correctAnswer: 'give you a hand', explanation: 'Give sb a hand with sth (帮某人一把)。' },
-  { id: 'd5_4', type: 'choice', category: 'Business', prompt: 'We need to ______ costs down.', options: ['keep', 'stay', 'make', 'do'], correctAnswer: 'keep', explanation: 'Keep costs down (控制成本/保持低成本)。' },
-  { id: 'd5_5', type: 'choice', category: 'Vocab', prompt: 'That price sounds ______.', options: ['reasonable', 'reason', 'reasoning', 'reasonably'], correctAnswer: 'reasonable', explanation: 'Reasonable (合理的)。' },
-  { id: 'd5_6', type: 'ordering', category: 'Email', prompt: '连词成句：我写邮件是为了与您分享文件。', options: ['writing', 'you', 'to', 'share', 'the', 'I', 'document', 'with', 'am'], correctAnswer: 'I am writing to share with you the document', explanation: '邮件常用开场白：I am writing to share with you...' },
-  { id: 'd5_7', type: 'choice', category: 'Email', prompt: 'Jane is now ______ this project.', options: ['in charge of', 'in charge with', 'on charge of', 'at charge of'], correctAnswer: 'in charge of', explanation: 'In charge of (负责)。' },
-  { id: 'd5_8', type: 'choice', category: 'Email', prompt: 'The attached file is ______.', options: ['for your review', 'for your looking', 'for your view', 'for your seeing'], correctAnswer: 'for your review', explanation: 'For your review (供您审阅)。' },
-  { id: 'd5_9', type: 'ordering', category: 'Email', prompt: '连词成句：能不能请团队花点时间过目？', options: ['go', 'moment', 'the', 'through', 'take', 'it', 'a', 'team', 'Could', 'to'], correctAnswer: 'Could the team take a moment to go through it', explanation: 'Take a moment to go through it (花点时间过目/浏览)。' },
-  { id: 'd5_10', type: 'translate', category: 'Email', prompt: 'Translate: "请注意，部分内容需要更新。"', correctAnswer: 'Please kindly note that sections are to be updated.', explanation: 'Please kindly note that... (请注意...); be to be updated (需要被更新)。' },
-  { id: 'd5_11', type: 'translate', category: 'Email', prompt: 'Translate: "您的反馈在1月5日前将受到极大感激。"', correctAnswer: 'Your input would be greatly appreciated by Jan 5th.', explanation: 'Input (反馈/意见); would be greatly appreciated (将不胜感激)。' },
-  { id: 'd5_12', type: 'translate', category: 'Homework', prompt: 'Translate: "这份SOP需要你的团队更新联系信息。"', correctAnswer: 'The SOP needs to be updated with contact information by your team.', explanation: 'Update with... (用...更新)。' },
-  { id: 'd5_13', type: 'choice', category: 'Homework', prompt: '______, we confirmed this date last week.', options: ['If you remember', 'If you forget', 'As you know', 'However'], correctAnswer: 'If you remember', explanation: 'If you remember (如果您还记得/唤起记忆)。' },
-  { id: 'd5_14', type: 'ordering', category: 'Greeting', prompt: '连词成句：我想把你的新助手介绍给你。', options: ['your', 'introduce', 'I', 'like', 'to', 'you', 'new', 'to', 'would', 'assistant'], correctAnswer: 'I would like to introduce you to your new assistant', explanation: 'Introduce sb to sb (介绍某人给某人)。' },
-  { id: 'd5_15', type: 'choice', category: 'Phrase', prompt: '______ we go to the cinema?', options: ['What if', 'How if', 'Why if', 'When if'], correctAnswer: 'What if', explanation: 'What if... (如果...怎么样/提议)。' }
+  // 1. Suffix -ist
+  { id: 'd5_1', type: 'choice', category: 'Suffix', prompt: 'Which suffix is used for "Scientist"?', options: ['-ist', '-or', '-er', '-ian'], correctAnswer: '-ist', explanation: 'Science -> Scientist. (-ist 表示专家/从业者)' },
+  // 2. Suffix -or
+  { id: 'd5_2', type: 'choice', category: 'Suffix', prompt: 'Which suffix is used for "Act__"?', options: ['-or', '-er', '-ist', '-ur'], correctAnswer: '-or', explanation: 'Act -> Actor. (-or 常用于拉丁词源职业)' },
+  // 3. Hire vs Here
+  { id: 'd5_3', type: 'choice', category: 'Vocab', prompt: 'Please come ______ and sign the contract.', options: ['here', 'hire', 'hear', 'hair'], correctAnswer: 'here', explanation: 'Here (这里) vs Hire (雇佣)。' },
+  // 4. Object Clause (Grammar)
+  { id: 'd5_4', type: 'choice', category: 'Grammar', prompt: 'I wonder ______.', options: ['what cutting in line is', 'what is cutting in line', 'what cutting in line', 'what is it'], correctAnswer: 'what cutting in line is', explanation: '宾语从句用陈述语序：Question word + Subject + Verb.' },
+  // 5. Take time
+  { id: 'd5_5', type: 'ordering', category: 'Grammar', prompt: '连词成句：不敢相信这花了我们要2个小时。', options: ['took', 'us', 'believe', 'hours', 'it', 'I', "can't", '2'], correctAnswer: "I can't believe it took us 2 hours", explanation: 'It takes sb time to do sth.' },
+  // 6. Be going to
+  { id: 'd5_6', type: 'choice', category: 'Grammar', prompt: 'She ______ tell us a wonderful lesson.', options: ['is going to', 'going to', 'go to', 'will going to'], correctAnswer: 'is going to', explanation: 'be going to do (将来时)。' },
+  // 7. Phrase: Cut in line
+  { id: 'd5_7', type: 'translate', category: 'Phrase', prompt: 'Translate: "请不要插队。"', correctAnswer: ['Please do not cut in line.', "Please don't cut in line."], explanation: 'Cut in line (插队). "Don\'t" and "Do not" are both acceptable.' },
+  // 8. Phrase: Calm down
+  { id: 'd5_8', type: 'choice', category: 'Phrase', prompt: 'He is angry. Tell him to ______.', options: ['calm down', 'come down', 'cut down', 'count down'], correctAnswer: 'calm down', explanation: 'Calm down (冷静/放松)。' },
+  // 9. Preposition: In (Time)
+  { id: 'd5_9', type: 'choice', category: 'Grammar', prompt: 'We will arrive ______ a few hours.', options: ['in', 'at', 'on', 'for'], correctAnswer: 'in', explanation: 'in + 时间段 (表示...时间以后)。' },
+  // 10. Phrase: That's it
+  { id: 'd5_10', type: 'choice', category: 'Phrase', prompt: 'When you want someone to stop behaving badly, you can shout: "______"', options: ['That\'s it!', 'That is good!', 'This is it!', 'It is that!'], correctAnswer: "That's it!", explanation: '"That\'s it!" 在此语境下表示“够了/适可而止/停下”。' },
+  // 11. Vocab: Course
+  { id: 'd5_11', type: 'choice', category: 'Vocab', prompt: 'They are playing at the golf ______.', options: ['course', 'curse', 'cause', 'case'], correctAnswer: 'course', explanation: 'Golf course (高尔夫球场)。' },
+  // 12. Exaggeration
+  { id: 'd5_12', type: 'choice', category: 'Phrase', prompt: 'The line is very long. You say: "It must be ______!"', options: ['a mile long', 'a meter long', 'an inch long', 'a foot long'], correctAnswer: 'a mile long', explanation: 'A mile long (夸张用法：非常长)。' },
+  // 13. Greeting
+  { id: 'd5_13', type: 'translate', category: 'Greeting', prompt: 'Translate: "今天冷吗？" (Use "chilly")', correctAnswer: 'Is it chilly today?', explanation: 'Chilly (寒冷的)。' },
+  // 14. Vocab: Upset
+  { id: 'd5_14', type: 'choice', category: 'Emotion', prompt: 'Don\'t get ______. It happens all the time.', options: ['upset', 'up', 'upper', 'set'], correctAnswer: 'upset', explanation: 'Get upset (难过/心烦)。' },
+  // 15. Vocab: Get = Arrive
+  { id: 'd5_15', type: 'ordering', category: 'Grammar', prompt: '连词成句：我到家时会给你打电话。', options: ['call', 'you', 'when', 'I', 'get', 'home', 'will', 'I'], correctAnswer: 'I will call you when I get home', explanation: 'Get home = Arrive home.' }
 ];
 
 // ==========================================
@@ -165,13 +203,15 @@ function getRandomItem<T>(array: T[], seed: number): T {
 
 const generateDailyQuestions = (day: number): Question[] => {
   
-  // 1. 优先检查是否有固定题库 (Day 2, 3, 4, 5)
+  // 1. 优先检查是否有固定题库 (Day 1 - 5)
+  if (day === 1) return DAY_1_FIXED;
   if (day === 2) return DAY_2_FIXED;
   if (day === 3) return DAY_3_FIXED;
   if (day === 4) return DAY_4_FIXED;
   if (day === 5) return DAY_5_FIXED;
 
-  // 2. 如果没有固定题库，则使用算法生成
+  // 2. 如果没有固定题库（Day 0 或 Day > 5），则使用算法生成
+  // Day 0: Warm-up (Random)
   const questions: Question[] = [];
   const baseSeed = day * 1000;
 
@@ -341,11 +381,12 @@ const HomePractice: React.FC = () => {
   }, [currentDay, currentIndex]);
 
   const progress = Math.min(((currentIndex) / currentQuestions.length) * 100, 100);
-  const dailyTopic = TOPIC_SCHEDULE[(currentDay - 1) % TOPIC_SCHEDULE.length];
+  const dailyTopic = currentDay === 0 ? "Warm-up / Review" : TOPIC_SCHEDULE[(currentDay - 1) % TOPIC_SCHEDULE.length];
 
   // --- FIX: Handle Day Change Logic ---
   const handleDayChange = (day: number) => {
-    if (day < 1 || day > 100) return;
+    // Allow day 0 (Warm-up)
+    if (day < 0 || day > 100) return;
     
     // 1. Save current day state before leaving (redundant due to useEffect, but safe)
     saveLastActiveDay(day);
@@ -398,6 +439,14 @@ const HomePractice: React.FC = () => {
     if (feedback) return;
     setOrderingState([...orderingState, word]);
   };
+  
+  // NEW FUNCTION: REMOVE WORD ON CLICK
+  const handleRemoveWord = (index: number) => {
+    if (feedback) return;
+    const newOrder = [...orderingState];
+    newOrder.splice(index, 1);
+    setOrderingState(newOrder);
+  };
 
   const handleOrderReset = () => {
     setOrderingState([]);
@@ -408,9 +457,19 @@ const HomePractice: React.FC = () => {
     const sentence = orderingState.join(' ');
     // Lenient check
     const cleanUser = sentence.toLowerCase().replace(/[^a-z ]/g, '');
-    const cleanAns = (currentQ.correctAnswer as string).toLowerCase().replace(/[^a-z ]/g, '');
     
-    if (cleanUser === cleanAns) {
+    // Normalize correct answer(s) into an array
+    const answers = Array.isArray(currentQ.correctAnswer) 
+        ? currentQ.correctAnswer 
+        : [currentQ.correctAnswer];
+    
+    // Check if user input matches ANY correct answer variant
+    const isCorrect = answers.some(ans => {
+        const cleanAns = ans.toLowerCase().replace(/[^a-z ]/g, '');
+        return cleanUser === cleanAns;
+    });
+    
+    if (isCorrect) {
       setFeedback('correct');
     } else {
       setFeedback('wrong');
@@ -422,22 +481,36 @@ const HomePractice: React.FC = () => {
     // 1. Strict Normalization (ignores spaces and punctuation)
     const normalize = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, '');
     const cleanUser = normalize(translateInput);
-    const cleanAns = normalize(currentQ.correctAnswer as string);
     
-    if (cleanUser === cleanAns) {
-        setFeedback('correct');
-        return;
+    // Support multiple correct answers (e.g. "Do not" vs "Don't")
+    const answers = Array.isArray(currentQ.correctAnswer) 
+        ? currentQ.correctAnswer 
+        : [currentQ.correctAnswer];
+
+    let isCorrect = false;
+
+    for (const ans of answers) {
+        const cleanAns = normalize(ans);
+        
+        // A. Strict Match
+        if (cleanUser === cleanAns) {
+            isCorrect = true;
+            break;
+        }
+
+        // B. Fuzzy Matching (fallback)
+        const fuzzyUser = translateInput.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
+        const fuzzyAns = ans.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
+        
+        const matches = fuzzyAns.filter(w => fuzzyUser.includes(w)).length;
+        // Require 70% overlap for fuzzy match
+        if (matches / fuzzyAns.length > 0.7) {
+           isCorrect = true;
+           break;
+        }
     }
 
-    // 2. Fuzzy Matching (fallback)
-    const ansWords = cleanAns.split(' '); // Note: normalize removes spaces, so this fallback is weak if normalized fails
-    // Let's use a slightly less strict normalization for fuzzy match
-    const fuzzyUser = translateInput.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
-    const fuzzyAns = (currentQ.correctAnswer as string).toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean);
-    
-    const matches = fuzzyAns.filter(w => fuzzyUser.includes(w)).length;
-
-    if (matches / fuzzyAns.length > 0.6) {
+    if (isCorrect) {
       setFeedback('correct');
     } else {
       setFeedback('wrong');
@@ -473,7 +546,9 @@ const HomePractice: React.FC = () => {
         <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
           <IconCheck className="w-12 h-12 text-wechat" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">Day {currentDay} 完成！</h2>
+        <h2 className="text-2xl font-bold text-slate-800 mb-2">
+            {currentDay === 0 ? "Warm-up 完成！" : `Day ${currentDay} 完成！`}
+        </h2>
         <p className="text-slate-500 mb-8">今日打卡成功！结果已自动保存。</p>
         <button 
           onClick={handleRestartDay}
@@ -501,13 +576,15 @@ const HomePractice: React.FC = () => {
         <div className="flex items-center justify-between mb-2">
             <button 
                 onClick={() => handleDayChange(currentDay - 1)}
-                disabled={currentDay <= 1}
+                disabled={currentDay <= 0}
                 className="text-slate-400 disabled:opacity-30 p-2"
             >
                 ◀
             </button>
             <div className="text-center">
-                <h2 className="text-lg font-bold text-slate-800">Day {currentDay}</h2>
+                <h2 className="text-lg font-bold text-slate-800">
+                    {currentDay === 0 ? "Day 0: Warm-up" : `Day ${currentDay}`}
+                </h2>
                 <p className="text-[10px] text-wechat font-bold uppercase tracking-wider">{dailyTopic}</p>
             </div>
             <button 
@@ -587,11 +664,16 @@ const HomePractice: React.FC = () => {
             {currentQ.type === 'ordering' && (
               <div className="flex flex-col gap-4">
                  <div className="min-h-[60px] p-3 bg-slate-50 rounded-lg border border-dashed border-slate-300 flex flex-wrap gap-2 items-center">
-                    {orderingState.length === 0 && <span className="text-slate-400 text-sm">点击下方单词组句...</span>}
+                    {orderingState.length === 0 && <span className="text-slate-400 text-sm">点击下方单词组句，点击上方单词可撤回...</span>}
                     {orderingState.map((word, i) => (
-                      <span key={i} className="px-3 py-1.5 bg-white border border-slate-200 rounded shadow-sm text-sm font-medium animate-pop-in">
+                      <button 
+                        key={i} 
+                        onClick={() => handleRemoveWord(i)}
+                        className="px-3 py-1.5 bg-white border border-slate-200 rounded shadow-sm text-sm font-medium animate-pop-in hover:bg-red-50 hover:border-red-200 transition-colors"
+                        title="点击撤回"
+                      >
                         {word}
-                      </span>
+                      </button>
                     ))}
                  </div>
                  <div className="flex flex-wrap gap-2">
