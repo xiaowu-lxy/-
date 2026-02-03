@@ -26,7 +26,10 @@ const LAB_NOUNS = [
   { word: "flu", meaning: "流感", context: "viral infection" },
   { word: "recovery", meaning: "恢复", context: "getting data or health back" },
   { word: "waitress", meaning: "女服务员", context: "woman serving food" },
-  { word: "deadline", meaning: "截止日期", context: "time limit" }
+  { word: "deadline", meaning: "截止日期", context: "time limit" },
+  { word: "priority", meaning: "优先级", context: "importance level" },
+  { word: "alternative", meaning: "替代方案", context: "another choice" },
+  { word: "schedule", meaning: "日程安排", context: "timetable" }
 ];
 
 // 2. 动词 (Verbs)
@@ -44,10 +47,13 @@ const ACTION_VERBS = [
   { word: "confirm", meaning: "确认", past: "confirmed" },
   { word: "re-run", meaning: "重新运行(测试)", past: "re-ran" },
   { word: "assist", meaning: "协助", past: "assisted" },
-  { word: "inform", meaning: "通知", past: "informed" }
+  { word: "inform", meaning: "通知", past: "informed" },
+  { word: "clarify", meaning: "澄清", past: "clarified" },
+  { word: "expedite", meaning: "加急/加快", past: "expedited" },
+  { word: "postpone", meaning: "推迟", past: "postponed" }
 ];
 
-// 3. 句型模板 (Sentence Templates)
+// 3. 句型模板 (Sentence Templates) - EXPANDED FOR FUTURE DAYS
 const SENTENCE_PATTERNS = [
   { en: "Please find the attached report.", cn: "请查收附件中的报告。", type: "Email" },
   { en: "The results show no signs of contamination.", cn: "结果显示没有污染迹象。", type: "Lab Reporting" },
@@ -60,7 +66,16 @@ const SENTENCE_PATTERNS = [
   { en: "We would need to re-run the IHC test.", cn: "我们需要重新运行IHC测试。", type: "Lab Work" },
   { en: "The tissue sections were wrongly placed.", cn: "组织切片放置错误。", type: "Lab Error" },
   { en: "I am calling in sick to my boss.", cn: "我正在打电话给老板请病假。", type: "Work Life" },
-  { en: "Could you help me recover the data?", cn: "你能帮我恢复数据吗？", type: "IT/Lab" }
+  { en: "Could you help me recover the data?", cn: "你能帮我恢复数据吗？", type: "IT/Lab" },
+  // New Additions for Long-term Practice
+  { en: "Please let me know if you need further information.", cn: "如需更多信息请告知我。", type: "Email" },
+  { en: "We apologize for the delay in processing your request.", cn: "对于处理您请求的延误，我们深表歉意。", type: "Email" },
+  { en: "Could you please clarify the second point?", cn: "你能澄清一下第二点吗？", type: "Meeting" },
+  { en: "I will get back to you by the end of the day.", cn: "我会在今天结束前回复你。", type: "Email" },
+  { en: "Please expedite the testing process.", cn: "请加快测试流程。", type: "Lab Work" },
+  { en: "It turned out to be a software issue.", cn: "结果发现是软件问题。", type: "IT/Lab" },
+  { en: "The machine has been acting up lately.", cn: "机器最近老出毛病。", type: "Lab Work" },
+  { en: "Please be advised that the schedule has changed.", cn: "请注意日程已更改。", type: "Email" }
 ];
 
 // 4. 每日主题轮换
@@ -69,7 +84,12 @@ const TOPIC_SCHEDULE = [
   "Lab Operations & Equipment",
   "Email Writing & Correspondence",
   "Meetings & Conference Calls",
-  "Safety & Quality Control (QC)"
+  "Safety & Quality Control (QC)",
+  "Travel & Casual Conversation",
+  "IT & Computer Issues",
+  "Advanced Email Patterns",
+  "Urgency & Problem Solving",
+  "Scheduling & Follow-ups"
 ];
 
 // ==========================================
@@ -186,6 +206,116 @@ const DAY_5_FIXED: Question[] = [
   { id: 'd5_15', type: 'ordering', category: 'Grammar', prompt: '连词成句：我到家时会给你打电话。', options: ['call', 'you', 'when', 'I', 'get', 'home', 'will', 'I'], correctAnswer: 'I will call you when I get home', explanation: 'Get home = Arrive home.' }
 ];
 
+// Day 6 (New Content based on Notes)
+const DAY_6_FIXED: Question[] = [
+  // 1. Grammar: If conditional (Future/Modal)
+  { id: 'd6_1', type: 'choice', category: 'Grammar', prompt: 'If I have dinner at 5 pm, I ______ eat snacks around 8 pm.', options: ['might', 'am', 'did', 'had'], correctAnswer: 'might', explanation: '主将情/从现: Main clause uses modal verb (might/can/will) for future possibility.' },
+  // 2. Grammar: Future Negative
+  { id: 'd6_2', type: 'choice', category: 'Grammar', prompt: 'Tonight I had dinner at 6:30, so I ______ eat anything later.', options: ['won\'t', 'don\'t', 'didn\'t', 'haven\'t'], correctAnswer: 'won\'t', explanation: 'won\'t = will not. Future intention.' },
+  // 3. Vocab: Road Trip
+  { id: 'd6_3', type: 'choice', category: 'Vocab', prompt: 'Road trips are really ______ and interesting.', options: ['fun', 'fan', 'fin', 'fund'], correctAnswer: 'fun', explanation: 'Road trips are fun.' },
+  // 4. Vocab: Packed
+  { id: 'd6_4', type: 'choice', category: 'Vocab', prompt: 'The car is ______ with luggage.', options: ['packed', 'packing', 'pack', 'packs'], correctAnswer: 'packed', explanation: 'be packed = full of things. (被动语态)' },
+  // 5. Phrase: Fill up
+  { id: 'd6_5', type: 'choice', category: 'Phrase', prompt: 'Did you ______ the tank?', options: ['fill up', 'feel up', 'fall up', 'full up'], correctAnswer: 'fill up', explanation: 'Fill up the tank (加满油)。' },
+  // 6. Phrase: Bases covered
+  { id: 'd6_6', type: 'ordering', category: 'Phrase', prompt: '连词成句：我们已经准备好各方面了。', options: ['have', 'We', 'got', 'bases', 'all', 'the', 'covered'], correctAnswer: 'We have got all the bases covered', explanation: 'Get all the bases covered = Be fully prepared.' },
+  // 7. Phrase: Get going
+  { id: 'd6_7', type: 'choice', category: 'Phrase', prompt: 'It is late. Let\'s ______.', options: ['get going', 'get go', 'getting go', 'got going'], correctAnswer: 'get going', explanation: 'Get going = Start moving / Leave.' },
+  // 8. Phrase: Pit stop
+  { id: 'd6_8', type: 'choice', category: 'Phrase', prompt: 'I need a break. Could we make a ______?', options: ['pit stop', 'pot stop', 'bit stop', 'pat stop'], correctAnswer: 'pit stop', explanation: 'Pit stop = A short stop for rest/fuel (refers to racing).' },
+  // 9. Pronunciation: /t/
+  { id: 'd6_9', type: 'choice', category: 'Pronunciation', prompt: 'How is "-ed" pronounced in "worked"?', options: ['/t/', '/d/', '/id/'], correctAnswer: '/t/', explanation: 'After unvoiced sounds (k, p, s, f...), -ed sounds like /t/.' },
+  // 10. Pronunciation: /d/
+  { id: 'd6_10', type: 'choice', category: 'Pronunciation', prompt: 'How is "-ed" pronounced in "played"?', options: ['/d/', '/t/', '/id/'], correctAnswer: '/d/', explanation: 'After vowels or voiced sounds (l, n, m...), -ed sounds like /d/.' },
+  // 11. Pronunciation: /id/
+  { id: 'd6_11', type: 'choice', category: 'Pronunciation', prompt: 'How is "-ed" pronounced in "wanted"?', options: ['/id/', '/t/', '/d/'], correctAnswer: '/id/', explanation: 'After "t" or "d", -ed sounds like /id/.' },
+  // 12. Grammar: Ordering If
+  { id: 'd6_12', type: 'ordering', category: 'Grammar', prompt: '连词成句：如果我在12:30吃午饭，我可能不吃东西。', options: ['If', 'I', 'have', 'lunch', 'may', 'not', 'eat'], correctAnswer: 'If I have lunch I may not eat', explanation: 'If clause + Main clause.' },
+  // 13. Vocab: Period
+  { id: 'd6_13', type: 'choice', category: 'Vocab', prompt: 'You don\'t eat any food for a long ______.', options: ['period', 'time', 'hour', 'moment'], correctAnswer: 'period', explanation: 'For a long period (of time).' },
+  // 14. Clause: That
+  { id: 'd6_14', type: 'choice', category: 'Grammar', prompt: 'You\'re sure ______ we\'re not forgetting anything.', options: ['that', 'what', 'which', 'where'], correctAnswer: 'that', explanation: 'I am sure that... (宾语从句).' },
+  // 15. Translation
+  { id: 'd6_15', type: 'translate', category: 'Phrase', prompt: 'Translate: "让我们出发吧。" (Use "get going")', correctAnswer: 'Let\'s get going.', explanation: 'Let\'s get going.' }
+];
+
+// Day 7 (New Content based on Notes)
+const DAY_7_FIXED: Question[] = [
+  { id: 'd7_1', type: 'choice', category: 'Grammar', prompt: 'She ______ eaten snacks. (Surely she did)', options: ['must have', 'should have', 'can have', 'will have'], correctAnswer: 'must have', explanation: 'Must have done: 表示对过去事情的肯定推测。' },
+  { id: 'd7_2', type: 'choice', category: 'Vocab', prompt: 'Her bank account was ______.', options: ['frozen', 'froze', 'freeze', 'freezing'], correctAnswer: 'frozen', explanation: 'Be frozen: 被冻结 (被动语态 be + past participle)。' },
+  { id: 'd7_3', type: 'choice', category: 'Phrase', prompt: 'My computer is ______ again. It is not working properly.', options: ['acting up', 'acting down', 'acting out', 'acting in'], correctAnswer: 'acting up', explanation: 'Act up: (机器)出毛病，不正常运作。' },
+  { id: 'd7_4', type: 'choice', category: 'Phrase', prompt: 'I hope my PC won\'t ______ any viruses.', options: ['pick up', 'pick out', 'pick in', 'pick off'], correctAnswer: 'pick up', explanation: 'Pick up a virus: 染上病毒。' },
+  { id: 'd7_5', type: 'choice', category: 'Grammar', prompt: 'We don\'t have ______ time to finish this.', options: ['much', 'many', 'a few', 'lots'], correctAnswer: 'much', explanation: 'Much: 修饰不可数名词 (time)，常用于否定句。' },
+  { id: 'd7_6', type: 'choice', category: 'Grammar', prompt: 'There are ______ emails in my inbox.', options: ['many', 'much', 'a little', 'any'], correctAnswer: 'many', explanation: 'Many: 修饰可数名词复数 (emails)。' },
+  { id: 'd7_7', type: 'choice', category: 'Phrase', prompt: 'It ______ that I don\'t need to work today.', options: ['turned out', 'turned on', 'turned in', 'turned off'], correctAnswer: 'turned out', explanation: 'Turn out: 结果是/原来是。' },
+  { id: 'd7_8', type: 'choice', category: 'Vocab', prompt: 'I am quickly ______ the document.', options: ['browsing', 'browser', 'browsed', 'browse'], correctAnswer: 'browsing', explanation: 'Browse: 浏览/快速查看。' },
+  { id: 'd7_9', type: 'choice', category: 'Grammar', prompt: 'This pen is mine. That one is ______.', options: ['yours', 'your', 'you', 'yours pen'], correctAnswer: 'yours', explanation: 'Yours = Your pen (名词性物主代词)。' },
+  { id: 'd7_10', type: 'choice', category: 'Phrase', prompt: 'Keep your antivirus software ______.', options: ['up to date', 'up to time', 'up to day', 'out of date'], correctAnswer: 'up to date', explanation: 'Up to date: 最新的/跟上时代的。' },
+  { id: 'd7_11', type: 'choice', category: 'Vocab', prompt: 'It is ______ noisy here.', options: ['quite', 'quiet', 'quit', 'quick'], correctAnswer: 'quite', explanation: 'Quite: 相当/非常。Quiet: 安静。' },
+  { id: 'd7_12', type: 'ordering', category: 'Phrase', prompt: '连词成句：你能帮我看看这台电脑吗？', options: ['take', 'help', 'Could', 'you', 'me', 'a', 'look', 'at', 'this', 'PC'], correctAnswer: 'Could you help me take a look at this PC', explanation: 'Take a look at: 看一看/检查。' },
+  { id: 'd7_13', type: 'translate', category: 'Phrase', prompt: 'Translate: "稍等一下。" (Use "second")', correctAnswer: 'Just a second.', explanation: 'Just a second.' },
+  { id: 'd7_14', type: 'choice', category: 'Vocab', prompt: 'I back up my data ______.', options: ['regularly', 'regular', 'regulation', 'regulates'], correctAnswer: 'regularly', explanation: 'Regularly: 定期地/有规律地。' },
+  { id: 'd7_15', type: 'choice', category: 'Phrase', prompt: '______, he was just tired, not sick.', options: ['In fact', 'Infect', 'In effect', 'Factor'], correctAnswer: 'In fact', explanation: 'In fact: 事实上。Infect: 感染。' }
+];
+
+// Day 8 (Extended Practice: Email Phrases & Sentences)
+const DAY_8_FIXED: Question[] = [
+  { id: 'd8_1', type: 'choice', category: 'Email', prompt: 'We apologize for any ______ caused.', options: ['inconvenience', 'convenience', 'troublesome', 'bad'], correctAnswer: 'inconvenience', explanation: 'Apologize for any inconvenience caused (为造成的不便道歉)。' },
+  { id: 'd8_2', type: 'ordering', category: 'Email', prompt: '连词成句：我写这封信是为了跟进上次的会议。', options: ['follow', 'up', 'on', 'I', 'am', 'writing', 'to', 'our', 'last', 'meeting'], correctAnswer: 'I am writing to follow up on our last meeting', explanation: 'I am writing to follow up on... (我写信是为了跟进...)。' },
+  { id: 'd8_3', type: 'choice', category: 'Email', prompt: 'Please feel free to ______ if you have questions.', options: ['reach out', 'reach in', 'reach up', 'touch'], correctAnswer: 'reach out', explanation: 'Reach out = Contact (联系)。' },
+  { id: 'd8_4', type: 'translate', category: 'Email', prompt: 'Translate: "请查收附件中的发票。"', correctAnswer: 'Please find the attached invoice.', explanation: 'Please find the attached... (请查收附件...)。' },
+  { id: 'd8_5', type: 'ordering', category: 'Email', prompt: '连词成句：如果您能在这件事上协助我们，我们将不胜感激。', options: ['appreciate', 'it', 'if', 'you', 'could', 'assist', 'us', 'We', 'would'], correctAnswer: 'We would appreciate it if you could assist us', explanation: 'We would appreciate it if... (如果您能...我们将不胜感激)。' },
+  { id: 'd8_6', type: 'choice', category: 'Email', prompt: 'I look forward to ______ you.', options: ['meeting', 'meet', 'met', 'will meet'], correctAnswer: 'meeting', explanation: 'Look forward to doing sth (期待做某事，to是介词)。' },
+  { id: 'd8_7', type: 'ordering', category: 'Email', prompt: '连词成句：请告诉我您什么时候有空。', options: ['me', 'know', 'when', 'you', 'are', 'available', 'Please', 'let'], correctAnswer: 'Please let me know when you are available', explanation: 'Please let me know... (请告诉我...)。' },
+  { id: 'd8_8', type: 'choice', category: 'Email', prompt: 'Please keep me ______ the loop.', options: ['in', 'on', 'at', 'with'], correctAnswer: 'in', explanation: 'Keep someone in the loop (让某人随时知情/在圈子里)。' },
+  { id: 'd8_9', type: 'translate', category: 'Email', prompt: 'Translate: "谢谢您的迅速回复。" (Use "prompt")', correctAnswer: 'Thank you for your prompt reply.', explanation: 'Prompt reply (迅速的回复)。' },
+  { id: 'd8_10', type: 'ordering', category: 'Email', prompt: '连词成句：很抱歉没有早点回复您。', options: ['getting', 'back', 'to', 'you', 'sooner', 'Sorry', 'for', 'not'], correctAnswer: 'Sorry for not getting back to you sooner', explanation: 'Sorry for not doing sth (抱歉没做某事)。' },
+  { id: 'd8_11', type: 'choice', category: 'Email', prompt: 'I am writing to ______ about the order status.', options: ['inquire', 'require', 'acquire', 'question'], correctAnswer: 'inquire', explanation: 'Inquire about (询问/查询)。' },
+  { id: 'd8_12', type: 'choice', category: 'Email', prompt: 'Please ______ me on that email.', options: ['CC', 'BB', 'DD', 'TO'], correctAnswer: 'CC', explanation: 'CC (Carbon Copy, 抄送)。' },
+  { id: 'd8_13', type: 'ordering', category: 'Meeting', prompt: '连词成句：我们要不安排个会议过一下细节？', options: ['schedule', 'a', 'meeting', 'to', 'go', 'over', 'details', 'Shall', 'we'], correctAnswer: 'Shall we schedule a meeting to go over details', explanation: 'Go over details (过一遍细节)。' },
+  { id: 'd8_14', type: 'translate', category: 'Email', prompt: 'Translate: "如果有任何进一步的问题，请联系我。"', correctAnswer: 'If you have any further questions, please contact me.', explanation: 'Further questions (进一步的问题)。' },
+  { id: 'd8_15', type: 'choice', category: 'Email', prompt: 'Formal closing: "Best ______,"', options: ['Regards', 'Regard', 'Wishes', 'Bye'], correctAnswer: 'Regards', explanation: 'Best Regards (诚挚的问候)。' }
+];
+
+// Day 9 (Urgent Situations & Clarification)
+const DAY_9_FIXED: Question[] = [
+  { id: 'd9_1', type: 'choice', category: 'Email', prompt: 'Please ______ this order as it is urgent.', options: ['expedite', 'slow', 'stop', 'delay'], correctAnswer: 'expedite', explanation: 'Expedite (加速/加急)。' },
+  { id: 'd9_2', type: 'ordering', category: 'Email', prompt: '连词成句：我写信是想澄清一下测试结果。', options: ['clarify', 'the', 'test', 'results', 'to', 'writing', 'am', 'I'], correctAnswer: 'I am writing to clarify the test results', explanation: 'I am writing to clarify... (我写信是为了澄清...)。' },
+  { id: 'd9_3', type: 'choice', category: 'Phrase', prompt: 'The machine started ______ up right before the deadline.', options: ['acting', 'working', 'doing', 'going'], correctAnswer: 'acting', explanation: 'Act up (出毛病)。Recalling from Day 7.' },
+  { id: 'd9_4', type: 'translate', category: 'Email', prompt: 'Translate: "请尽快回复。" (Use "convenience")', correctAnswer: 'Please reply at your earliest convenience.', explanation: 'At your earliest convenience (尽早/方便时尽快)。' },
+  { id: 'd9_5', type: 'choice', category: 'Email', prompt: 'This matter is of high ______.', options: ['priority', 'prior', 'primary', 'prime'], correctAnswer: 'priority', explanation: 'High priority (高优先级)。' },
+  { id: 'd9_6', type: 'ordering', category: 'Email', prompt: '连词成句：很抱歉回复晚了。', options: ['for', 'the', 'delayed', 'response', 'Apologies'], correctAnswer: 'Apologies for the delayed response', explanation: 'Apologies for... (为...道歉)。' },
+  { id: 'd9_7', type: 'choice', category: 'Grammar', prompt: 'I ______ have checked the schedule earlier. (Regret)', options: ['should', 'must', 'can', 'will'], correctAnswer: 'should', explanation: 'Should have done (本应该做某事而没做，表示后悔)。' },
+  { id: 'd9_8', type: 'choice', category: 'Phrase', prompt: 'It ______ out to be a simple error.', options: ['turned', 'moved', 'looked', 'took'], correctAnswer: 'turned', explanation: 'Turn out (结果是)。Recalling from Day 7.' },
+  { id: 'd9_9', type: 'translate', category: 'Email', prompt: 'Translate: "请告知是否有任何更新。"', correctAnswer: 'Please let me know if there are any updates.', explanation: 'Please let me know if... (请告知是否...)。' },
+  { id: 'd9_10', type: 'ordering', category: 'Meeting', prompt: '连词成句：我们可以把会议推迟到明天吗？', options: ['meeting', 'postpone', 'the', 'Can', 'tomorrow', 'we', 'to'], correctAnswer: 'Can we postpone the meeting to tomorrow', explanation: 'Postpone (推迟)。' },
+  { id: 'd9_11', type: 'choice', category: 'Email', prompt: 'Please find the ______ document.', options: ['attached', 'attaching', 'attach', 'attachment'], correctAnswer: 'attached', explanation: 'Attached document (附件文档/被附上的文档)。' },
+  { id: 'd9_12', type: 'choice', category: 'Vocab', prompt: 'Do you have an ______ solution?', options: ['alternative', 'alter', 'alternate', 'native'], correctAnswer: 'alternative', explanation: 'Alternative (替代的/备选的)。' },
+  { id: 'd9_13', type: 'translate', category: 'Meeting', prompt: 'Translate: "我想确认一下我的预定。"', correctAnswer: 'I would like to confirm my reservation.', explanation: 'Confirm reservation (确认预定)。' },
+  { id: 'd9_14', type: 'ordering', category: 'Grammar', prompt: '连词成句：如果我知道，我就告诉你了。', options: ['known', 'I', 'would', 'have', 'told', 'you', 'Had', 'I'], correctAnswer: 'Had I known I would have told you', explanation: 'Had I known = If I had known (虚拟语气倒装)。' },
+  { id: 'd9_15', type: 'choice', category: 'Email', prompt: 'I hope this email ______ you well.', options: ['finds', 'looks', 'sees', 'gets'], correctAnswer: 'finds', explanation: 'I hope this email finds you well (希望您一切都好，常用邮件开场)。' }
+];
+
+// Day 10 (Scheduling & Confirmations)
+const DAY_10_FIXED: Question[] = [
+  { id: 'd10_1', type: 'choice', category: 'Email', prompt: 'I am writing to ______ receipt of your email.', options: ['acknowledge', 'knowledge', 'know', 'admit'], correctAnswer: 'acknowledge', explanation: 'Acknowledge receipt (确认收到)。' },
+  { id: 'd10_2', type: 'ordering', category: 'Meeting', prompt: '连词成句：周二下午2点对你合适吗？', options: ['Tuesday', 'work', 'Does', 'for', 'you', '2pm'], correctAnswer: 'Does 2pm Tuesday work for you', explanation: 'Does ... work for you? (时间对你合适吗？)' },
+  { id: 'd10_3', type: 'choice', category: 'Phrase', prompt: 'I\'m afraid I can\'t ______ it to the meeting.', options: ['make', 'do', 'get', 'take'], correctAnswer: 'make', explanation: 'Make it (赶上/出席)。' },
+  { id: 'd10_4', type: 'translate', category: 'Email', prompt: 'Translate: "我们将调查此事。" (Use "look into")', correctAnswer: 'We will look into this matter.', explanation: 'Look into (调查/研究)。' },
+  { id: 'd10_5', type: 'choice', category: 'Email', prompt: 'Further ______ our conversation, here is the plan.', options: ['to', 'of', 'with', 'at'], correctAnswer: 'to', explanation: 'Further to (继...之后/跟进...)。' },
+  { id: 'd10_6', type: 'ordering', category: 'Email', prompt: '连词成句：请随时通知我进度。', options: ['Please', 'me', 'keep', 'posted', 'on', 'progress', 'the'], correctAnswer: 'Please keep me posted on the progress', explanation: 'Keep me posted (随时通知我)。' },
+  { id: 'd10_7', type: 'choice', category: 'Vocab', prompt: 'What is the ______ for this project?', options: ['deadline', 'dead line', 'finish', 'end'], correctAnswer: 'deadline', explanation: 'Deadline (截止日期)。' },
+  { id: 'd10_8', type: 'choice', category: 'Email', prompt: 'We regret to ______ you that the sample is lost.', options: ['inform', 'information', 'say', 'tell'], correctAnswer: 'inform', explanation: 'Regret to inform you (很遗憾地通知您)。' },
+  { id: 'd10_9', type: 'translate', category: 'Phrase', prompt: 'Translate: "以防万一。" (Use "case")', correctAnswer: 'Just in case.', explanation: 'Just in case.' },
+  { id: 'd10_10', type: 'ordering', category: 'Email', prompt: '连词成句：我很乐意安排一次电话会议。', options: ['be', 'happy', 'to', 'arrange', 'a', 'call', 'I', 'would'], correctAnswer: 'I would be happy to arrange a call', explanation: 'I would be happy to... (我很乐意...)。' },
+  { id: 'd10_11', type: 'choice', category: 'Grammar', prompt: 'You ______ better check the SOP first.', options: ['had', 'have', 'should', 'would'], correctAnswer: 'had', explanation: 'Had better (最好/应该)。' },
+  { id: 'd10_12', type: 'choice', category: 'Email', prompt: 'Please ______ the attached file for details.', options: ['see', 'look', 'watch', 'view'], correctAnswer: 'see', explanation: 'See attached (参阅附件)。' },
+  { id: 'd10_13', type: 'translate', category: 'Email', prompt: 'Translate: "期待很快收到您的来信。"', correctAnswer: 'Look forward to hearing from you soon.', explanation: 'Look forward to hearing from you.' },
+  { id: 'd10_14', type: 'choice', category: 'Vocab', prompt: 'Is the data ______?', options: ['accurate', 'accuracy', 'act', 'sure'], correctAnswer: 'accurate', explanation: 'Accurate (准确的)。' },
+  { id: 'd10_15', type: 'choice', category: 'Phrase', prompt: 'Let\'s ______ up next week.', options: ['catch', 'match', 'patch', 'fetch'], correctAnswer: 'catch', explanation: 'Catch up (碰头/叙旧/跟进)。' }
+];
+
 // ==========================================
 // 题目生成引擎 (GENERATOR ENGINE)
 // ==========================================
@@ -203,14 +333,19 @@ function getRandomItem<T>(array: T[], seed: number): T {
 
 const generateDailyQuestions = (day: number): Question[] => {
   
-  // 1. 优先检查是否有固定题库 (Day 1 - 5)
+  // 1. 优先检查是否有固定题库 (Day 1 - 10)
   if (day === 1) return DAY_1_FIXED;
   if (day === 2) return DAY_2_FIXED;
   if (day === 3) return DAY_3_FIXED;
   if (day === 4) return DAY_4_FIXED;
   if (day === 5) return DAY_5_FIXED;
+  if (day === 6) return DAY_6_FIXED;
+  if (day === 7) return DAY_7_FIXED;
+  if (day === 8) return DAY_8_FIXED;
+  if (day === 9) return DAY_9_FIXED;
+  if (day === 10) return DAY_10_FIXED;
 
-  // 2. 如果没有固定题库（Day 0 或 Day > 5），则使用算法生成
+  // 2. 如果没有固定题库（Day 0 或 Day > 10），则使用算法生成
   // Day 0: Warm-up (Random)
   const questions: Question[] = [];
   const baseSeed = day * 1000;
@@ -577,9 +712,10 @@ const HomePractice: React.FC = () => {
             <button 
                 onClick={() => handleDayChange(currentDay - 1)}
                 disabled={currentDay <= 0}
-                className="text-slate-400 disabled:opacity-30 p-2"
+                className="text-slate-400 disabled:opacity-30 p-2 hover:bg-slate-50 rounded-full transition-colors"
+                title="Previous Day"
             >
-                ◀
+                <span className="text-xl">◀</span>
             </button>
             <div className="text-center">
                 <h2 className="text-lg font-bold text-slate-800">
@@ -590,9 +726,10 @@ const HomePractice: React.FC = () => {
             <button 
                 onClick={() => handleDayChange(currentDay + 1)}
                 disabled={currentDay >= 100}
-                className="text-slate-400 disabled:opacity-30 p-2"
+                className="text-slate-400 disabled:opacity-30 p-2 hover:bg-slate-50 rounded-full transition-colors"
+                title="Next Day"
             >
-                ▶
+                <span className="text-xl">▶</span>
             </button>
         </div>
         
